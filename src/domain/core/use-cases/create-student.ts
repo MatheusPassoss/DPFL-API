@@ -1,0 +1,58 @@
+import { Student } from "../entities/Student";
+import { IStudentRepository } from "../repositories/IStudent-repository";
+import { crypto } from "../../..";
+
+import { InvalidNameError } from "../exceptions/invalid-name-error";
+import { InvalidCpfError } from "../exceptions/invalid-cpf-error";
+import { EntityNotSavedError } from "../exceptions/entity-not-saved-error"
+import { InvalidParamError } from "../exceptions/invalid-param-error";
+
+
+interface CreateStudentParams {
+    name: string
+    email: string
+    cpf: string
+}
+
+export class CreateStudentUseCase {
+    private readonly repository: IStudentRepository;
+
+    constructor(repository: IStudentRepository) {
+        this.repository = repository;
+    }
+
+    async execute(params: CreateStudentParams): Promise<Student> {
+        const errors = this.validateParams(params);
+
+        if (errors) {
+            throw new InvalidParamError(errors);
+        }
+        const id = crypto.ra
+        const newStudent = Student.create(params, id);
+
+        const saved = await this.repository.save(newStudent);
+        if (!saved) {
+            throw new EntityNotSavedError()
+        }
+
+        return saved;
+    }
+
+    private validateParams(params: CreateStudentParams) {
+        const errors: Error[] = [];
+
+        if (!params.name || params.name.trim().length < 2 || params.name.trim().length > 255) {
+            errors.push(new InvalidNameError(params.name));
+        }
+
+        if (!params.cpf || params.name.trim().length != 11) {
+            errors.push(new InvalidCpfError(params.cpf));
+        }
+
+        
+
+        return errors.length > 0 ? errors : null;
+    }
+}
+
+ 
