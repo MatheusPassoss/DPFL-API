@@ -7,10 +7,7 @@ import { crypto } from "../../.."
 import { IStudentRepository } from "../repositories/IStudent-repository"
 import { IMentorRepository } from "../repositories/IMentor-repositorie"
 import { EntityNotFound } from "../exceptions/entity-not-found"
-
-
-
-
+import { IUseCase } from "../shared-global/IUse-case"
 
 
 interface CreateMentoriaParams {
@@ -19,7 +16,7 @@ interface CreateMentoriaParams {
     date?: Date
 }
 
-export class CreateMentoria {
+export class CreateMentoria implements IUseCase<CreateMentoriaParams, Mentoria> {
     private readonly repository: IMentoriaRepository;
     private readonly studentRepository: IStudentRepository;
     private readonly mentorRepository: IMentorRepository;
@@ -36,8 +33,21 @@ export class CreateMentoria {
         if (errors) {
             throw new InvalidParamError(errors);
         }
-        const id = crypto.UUID()
-        const newMentoria = Mentoria.create(mentorParams, studentParams, id);
+        
+        const id = crypto.randomUUID();
+        const studentParams = await this.mentorRepository.findById(params.mentorId)
+        const mentorParams = await this.studentRepository.findById(params.studentId)
+
+        const newMentoria = Mentoria.create({
+            name: mentorParams.name,
+            email: mentorParams.email,
+            id: mentorParams.id
+        }, 
+        {
+            name: studentParams.name,
+            email: studentParams.email,
+            id: studentParams.id
+        }, id);
 
         const saved = await this.repository.save(newMentoria);
         if (!saved) {
@@ -56,10 +66,6 @@ export class CreateMentoria {
         if (!mentorExits) errors.push(new EntityNotFound("Mentor"));
 
         if (!studentExists) errors.push(new EntityNotFound("Student"));
-
-
-
-
 
         return errors.length > 0 ? errors : null;
     }
