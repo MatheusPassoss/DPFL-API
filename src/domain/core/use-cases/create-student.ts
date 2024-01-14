@@ -1,11 +1,11 @@
 import { Student } from "../entities/Student";
 import { IStudentRepository } from "../repositories/IStudent-repository";
 import { crypto } from "../../..";
-
 import { InvalidNameError } from "../exceptions/invalid-name-error";
 import { InvalidCpfError } from "../exceptions/invalid-cpf-error";
 import { EntityNotSavedError } from "../exceptions/entity-not-saved-error"
 import { InvalidParamError } from "../exceptions/invalid-param-error";
+import { IUseCase } from "../shared-global/IUse-case";
 
 
 interface CreateStudentParams {
@@ -14,7 +14,7 @@ interface CreateStudentParams {
     cpf: string
 }
 
-export class CreateStudentUseCase {
+export class CreateStudentUseCase implements IUseCase<CreateStudentParams, Student>{
     private readonly repository: IStudentRepository;
 
     constructor(repository: IStudentRepository) {
@@ -27,7 +27,7 @@ export class CreateStudentUseCase {
         if (errors) {
             throw new InvalidParamError(errors);
         }
-        const id = crypto.ra
+        const id = crypto.randomUUID()
         const newStudent = Student.create(params, id);
 
         const saved = await this.repository.save(newStudent);
@@ -49,7 +49,6 @@ export class CreateStudentUseCase {
             errors.push(new InvalidCpfError(params.cpf));
         }
 
-        
 
         return errors.length > 0 ? errors : null;
     }

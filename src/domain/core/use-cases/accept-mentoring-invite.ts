@@ -4,7 +4,6 @@ import { IMentoringInviteRepository } from "../repositories/IMentoringInvite-rep
 import { InvalidParamError } from "../exceptions/invalid-param-error";
 import { EntityNotUpdatedError } from "../exceptions/entity-not-updated-error";
 import { IUseCase } from "../shared-global/IUse-case";
-import { RefuseMentoringInvite } from "./refuse-mentoring-invite";
 
 interface AcceptMentoringInviteParams {
     idMentoringInvite: string,
@@ -19,7 +18,6 @@ export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInvitePara
         this.MentoringInviteRepository = InviteRepository
     }
 
-
     async execute(params: AcceptMentoringInviteParams) {
         const errors = await this.validateParams(params.idMentoringInvite)
 
@@ -27,25 +25,15 @@ export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInvitePara
             throw new InvalidParamError(errors);
         }
 
-        const updateInviteToAceppt: Partial<MentoringInvite> = {
-            lastUpdate: new Date(),
-            status: "ACCEPT"
-        }
-
-        const update = await this.MentoringInviteRepository.update(updateInviteToAceppt);
+        const update = await this.MentoringInviteRepository.acceptInvite({ status: "ACCEPT", updateAt: new Date() });
 
         if (!update) {
             throw new EntityNotUpdatedError()
         } else {
-
-            const allMentoringInvites = await this.MentoringInviteRepository.listByStudentId(params.idStudent)
-
-            if (allMentoringInvites != null) {
-
-                allMentoringInvites.forEach((invite) => {
-                    if (invite.id != params.idMentoringInvite) {
-                        new RefuseMentoringInvite(this.MentoringInviteRepository).execute(invite.id)
-                    }})}
+            this.MentoringInviteRepository.refuseAllPeddingInvites(
+                { idStudent: params.idStudent, status: "PEDDING" },
+                { updateAt: new Date(), status: "REFUSED" }
+            )
         }
 
         return update;
@@ -55,8 +43,6 @@ export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInvitePara
         const errors: Error[] = []
 
         const inviteExists = await this.MentoringInviteRepository.findById(idMentoringInvite)
-
-
 
         if (!inviteExists) {
             errors.push(new EntityNotFound("Mentoring Invite"))

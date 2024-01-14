@@ -7,6 +7,7 @@ import { EntityNotFound } from "../exceptions/entity-not-found";
 import { MentorAllowedToInvite } from "./mentor-allowed-to-invite";
 import { MentorNotAllowedToInvite } from "../exceptions/mentor-not-allowed-to-invite";
 import { EntityNotSavedError } from "../exceptions/entity-not-saved-error";
+import { IUseCase } from "../shared-global/IUse-case";
 
 
 interface CreateMentoringInviteParams {
@@ -15,7 +16,7 @@ interface CreateMentoringInviteParams {
     createAt: Date
 }
 
-export class CreateMentoringInvite {
+export class CreateMentoringInvite implements IUseCase<CreateMentoringInviteParams, MentoringInvite>{
 
     private readonly repository: IMentoringInviteRepository
     private readonly studentRepository: IStudentRepository
@@ -32,7 +33,7 @@ export class CreateMentoringInvite {
             throw new InvalidParamError(errors);
         }
 
-        const id = "aaabbbbccc"
+        const id = crypto.randomUUID()
         const date = new Date()
 
         const newMentoringInvite = MentoringInvite.create(params.idMentor, params.idStudent, id, date);
@@ -50,7 +51,7 @@ export class CreateMentoringInvite {
 
         const studentExists = this.studentRepository.findById(params.idStudent)
         const mentorExists = this.mentorRepository.findById(params.idStudent)
-        const mentorAllowedToInvite = await new MentorAllowedToInvite(this.mentorRepository, this.repository).verify(params.idMentor)
+        const mentorAllowedToInvite = await new MentorAllowedToInvite(this.mentorRepository, this.repository).execute({mentorId: params.idMentor})
 
         if (!studentExists) {
             errors.push(new EntityNotFound("Student"))

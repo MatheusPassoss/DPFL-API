@@ -3,9 +3,15 @@ import { EntityNotFound } from "../exceptions/entity-not-found";
 import { IMentoringInviteRepository } from "../repositories/IMentoringInvite-repository";
 import { InvalidParamError } from "../exceptions/invalid-param-error";
 import { EntityNotUpdatedError } from "../exceptions/entity-not-updated-error";
+import { IUseCase } from "../shared-global/IUse-case";
 
 
-export class RefuseMentoringInvite {
+
+interface RefuseMentoringInviteParams {
+    idMentoringInvite: string
+}
+
+export class RefuseMentoringInvite implements IUseCase<RefuseMentoringInviteParams, MentoringInvite>{
 
     private readonly MentoringInviteRepository: IMentoringInviteRepository
 
@@ -14,15 +20,15 @@ export class RefuseMentoringInvite {
     }
 
 
-    async execute(idMentoringInvite: string) {
-        const errors = await this.validateParams(idMentoringInvite)
+    async execute(params: RefuseMentoringInviteParams) {
+        const errors = await this.validateParams(params.idMentoringInvite)
 
         if (errors) {
             throw new InvalidParamError(errors);
         }
 
         const updateInviteToRefused: Partial<MentoringInvite> = {
-            lastUpdate: new Date(),
+            updateAt: new Date(),
             status: "REFUSED"
         }
 

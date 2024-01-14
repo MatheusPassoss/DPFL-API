@@ -1,29 +1,25 @@
-
-export interface MentorData  {
+export interface MentorData {
     name: string
-}
-
-interface teste {
-    mentoria: {
-      invites: string[]
-      studentId: null
-      mentoriaId: null
-    }
-}
-
-export class Mentor implements MentorData {
+    email: string
+    cpf: string
+  
+  }
+  
+  export class Mentor implements MentorData {
+    id: string
     name: string
-
-    private constructor(mentor: Mentor) {
-        this.name = mentor.name
+    email: string
+    cpf: string
+  
+    private constructor(mentor: MentorData, id: string) {
+      this.id = id
+      this.name = mentor.name;
+      this.email = mentor.email;
+      this.cpf = mentor.cpf;
     }
-
-    static create(mentor: Mentor, valid: boolean) {
-
-        if (valid) {
-            return new Mentor(mentor)
-        }
-
-        return 'Failed'
+  
+    static create(mentor: MentorData, id: string): Mentor {
+      return new Mentor(mentor, id)
     }
-}
+  
+  }
