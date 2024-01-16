@@ -1,9 +1,9 @@
-import { MentoringInvite } from "../entities/mentoringInvite";
-import { EntityNotFound } from "../exceptions/entity-not-found";
-import { InvalidParamError } from "../exceptions/invalid-param-error";
-import { IMentorRepository } from "../repositories/IMentor-repositorie";
-import { IMentoringInviteRepository } from "../repositories/IMentoringInvite-repository";
-import { IUseCase } from "../shared-global/IUse-case";
+import { MentoringInvite } from "../../entities/mentoringInvite";
+import { EntityNotFound } from "../../exceptions/entity-not-found";
+import { InvalidParamError } from "../../exceptions/invalid-param-error";
+import { IMentorRepository } from "../../repositories/IMentor-repositorie";
+import { IMentoringInviteRepository } from "../../repositories/IMentoringInvite-repository";
+import { IUseCase } from "../../shared-global/IUse-case";
 
 
 interface MentorAllowedToInviteParams {
@@ -34,7 +34,6 @@ export class MentorAllowedToInvite implements IUseCase<MentorAllowedToInvitePara
         if (!mentoringInvitesOrNull) return true; 
 
         return mentoringInvitesOrNull.length == 0
-
     }
 
     private async validateParams(mentorId: string): Promise<Error[] | null> {

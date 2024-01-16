@@ -1,14 +1,16 @@
-import { MentoringInvite } from "../entities/mentoringInvite";
-import { IMentoringInviteRepository } from "../repositories/IMentoringInvite-repository"
-import { InvalidParamError } from "../exceptions/invalid-param-error";
-import { IStudentRepository } from "../repositories/IStudent-repository";
-import { IMentorRepository } from "../repositories/IMentor-repositorie";
-import { EntityNotFound } from "../exceptions/entity-not-found";
+import { MentoringInvite } from "../../entities/mentoringInvite";
+import { IMentoringInviteRepository } from "../../repositories/IMentoringInvite-repository"
+import { InvalidParamError } from "../../exceptions/invalid-param-error";
+import { IStudentRepository } from "../../repositories/IStudent-repository";
+import { IMentorRepository } from "../../repositories/IMentor-repositorie";
+import { EntityNotFound } from "../../exceptions/entity-not-found";
 import { MentorAllowedToInvite } from "./mentor-allowed-to-invite";
-import { MentorNotAllowedToInvite } from "../exceptions/mentor-not-allowed-to-invite";
-import { EntityNotSavedError } from "../exceptions/entity-not-saved-error";
-import { IUseCase } from "../shared-global/IUse-case";
-
+import { MentorNotAllowedToInvite } from "../../exceptions/mentor-not-allowed-to-invite";
+import { EntityNotSavedError } from "../../exceptions/entity-not-saved-error";
+import { IUseCase } from "../../shared-global/IUse-case";
+import { StudentAllowedToInvite } from "./student-allowed-to-invite";
+import { IMentoringRepository } from "../../repositories/IMentoring-repositorie";
+import { StudentNotAllowedToInvite } from "../../exceptions/student-not-allowed-to-invite";
 
 interface CreateMentoringInviteParams {
     idMentor: string
@@ -19,6 +21,7 @@ interface CreateMentoringInviteParams {
 export class CreateMentoringInvite implements IUseCase<CreateMentoringInviteParams, MentoringInvite>{
 
     private readonly repository: IMentoringInviteRepository
+    private readonly mentoringRepository: IMentoringRepository
     private readonly studentRepository: IStudentRepository
     private readonly mentorRepository: IMentorRepository
 
@@ -52,6 +55,8 @@ export class CreateMentoringInvite implements IUseCase<CreateMentoringInvitePara
         const studentExists = this.studentRepository.findById(params.idStudent)
         const mentorExists = this.mentorRepository.findById(params.idStudent)
         const mentorAllowedToInvite = await new MentorAllowedToInvite(this.mentorRepository, this.repository).execute({mentorId: params.idMentor})
+        const studentAllowedToInvite = await new StudentAllowedToInvite(this.studentRepository, this.mentoringRepository).execute({idStudent: params.idStudent})
+
 
         if (!studentExists) {
             errors.push(new EntityNotFound("Student"))
@@ -65,10 +70,11 @@ export class CreateMentoringInvite implements IUseCase<CreateMentoringInvitePara
             errors.push(new MentorNotAllowedToInvite())
         }
 
+        if (!studentAllowedToInvite) {
+            errors.push(new StudentNotAllowedToInvite())
+        }
+
         return errors.length > 0 ? errors : null;
     }
-
-
-
 
 }

@@ -1,13 +1,13 @@
 export class MentoringInvite {
 
-    readonly id: string
-    private readonly idMentor: string
+    public readonly id: string
+    public readonly idMentor: string
     public readonly idStudent: string
     private createAt: Date
     public updateAt: Date
     public status: "PEDDING" | "ACCEPT" | "REFUSED" | "CANCELED"
 
-    private constructor(idMentor: string, idStudent: string, id:string, date?) {
+    private constructor(idMentor: string, idStudent: string, id:string, date?: Date) {
         this.id = id
         this.idStudent = idStudent
         this.idMentor = idMentor
