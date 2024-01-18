@@ -3,15 +3,15 @@ export class MentoringInvite {
     public readonly id: string
     public readonly idMentor: string
     public readonly idStudent: string
-    private createAt: Date
+    private creatAt: Date
     public updateAt: Date
-    public status: "PEDDING" | "ACCEPT" | "REFUSED" | "CANCELED"
+    public status: "PEDDING" | "ACCEPTED" | "REFUSED" | "CANCELED"
 
     private constructor(idMentor: string, idStudent: string, id:string, date?: Date) {
         this.id = id
         this.idStudent = idStudent
         this.idMentor = idMentor
-        this.createAt = date ? date : new Date()
+        this.creatAt = date ? date : new Date()
         this.status = "PEDDING"
         this.updateAt = new Date()
     }

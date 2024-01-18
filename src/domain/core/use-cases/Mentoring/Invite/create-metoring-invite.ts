@@ -1,16 +1,16 @@
-import { MentoringInvite } from "../../entities/mentoringInvite";
-import { IMentoringInviteRepository } from "../../repositories/IMentoringInvite-repository"
-import { InvalidParamError } from "../../exceptions/invalid-param-error";
-import { IStudentRepository } from "../../repositories/IStudent-repository";
-import { IMentorRepository } from "../../repositories/IMentor-repositorie";
-import { EntityNotFound } from "../../exceptions/entity-not-found";
+import { MentoringInvite } from "../../../entities/mentoringInvite";
+import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository"
+import { InvalidParamError } from "../../../exceptions/invalid-param-error";
+import { IStudentRepository } from "../../../repositories/User/IStudent-repository";
+import { IMentorRepository } from "../../../repositories/User/IMentor-repositorie";
+import { EntityNotFound } from "../../../exceptions/entity-not-found";
 import { MentorAllowedToInvite } from "./mentor-allowed-to-invite";
-import { MentorNotAllowedToInvite } from "../../exceptions/mentor-not-allowed-to-invite";
-import { EntityNotSavedError } from "../../exceptions/entity-not-saved-error";
-import { IUseCase } from "../../shared-global/IUse-case";
+import { MentorNotAllowedToInvite } from "../../../exceptions/mentor-not-allowed-to-invite";
+import { EntityNotSavedError } from "../../../exceptions/entity-not-saved-error";
+import { IUseCase } from "../../../shared-global/IUse-case";
 import { StudentAllowedToInvite } from "./student-allowed-to-invite";
-import { IMentoringRepository } from "../../repositories/IMentoring-repositorie";
-import { StudentNotAllowedToInvite } from "../../exceptions/student-not-allowed-to-invite";
+import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring-repositorie";
+import { StudentNotAllowedToInvite } from "../../../exceptions/student-not-allowed-to-invite";
 
 interface CreateMentoringInviteParams {
     idMentor: string

@@ -1,14 +1,16 @@
-import { MentoringInvite } from "../entities/mentoringInvite";
-import { EntityNotFound } from "../exceptions/entity-not-found";
-import { IMentoringInviteRepository } from "../repositories/IMentoringInvite-repository";
-import { InvalidParamError } from "../exceptions/invalid-param-error";
-import { EntityNotUpdatedError } from "../exceptions/entity-not-updated-error";
-import { IUseCase } from "../shared-global/IUse-case";
+import { MentoringInvite } from "../../../entities/mentoringInvite";
+import { EntityNotFound } from "../../../exceptions/entity-not-found";
+import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository";
+import { InvalidParamError } from "../../../exceptions/invalid-param-error";
+import { EntityNotUpdatedError } from "../../../exceptions/entity-not-updated-error";
+import { IUseCase } from "../../../shared-global/IUse-case";
 
 
 
 interface RefuseMentoringInviteParams {
     idMentoringInvite: string
+    idMentor: string,
+    idStudent: string
 }
 
 export class RefuseMentoringInvite implements IUseCase<RefuseMentoringInviteParams, MentoringInvite>{
@@ -27,18 +29,24 @@ export class RefuseMentoringInvite implements IUseCase<RefuseMentoringInvitePara
             throw new InvalidParamError(errors);
         }
 
-        const updateInviteToRefused: Partial<MentoringInvite> = {
-            updateAt: new Date(),
-            status: "REFUSED"
+        const filterInvite: Partial<MentoringInvite> = {
+            id: params.idMentoringInvite,
+            idStudent: params.idStudent,
+            status: "PEDDING"
         }
 
-        const update = await this.MentoringInviteRepository.update(updateInviteToRefused);
+        const updateInvite: Partial<MentoringInvite> = {
+            status: "REFUSED",
+            updateAt: new Date()
+        }
+
+        const refused = await this.MentoringInviteRepository.findOneAndUpdate(filterInvite, updateInvite);
         
-        if (!update) {
+        if (!refused) {
             throw new EntityNotUpdatedError()
         }
 
-        return update;
+        return refused;
     }
 
     private async validateParams(idMentoringInvite: string) {

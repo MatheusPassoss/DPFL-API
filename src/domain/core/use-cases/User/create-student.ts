@@ -1,11 +1,11 @@
-import { Student } from "../entities/Student";
-import { IStudentRepository } from "../repositories/IStudent-repository";
-import { crypto } from "../../..";
-import { InvalidNameError } from "../exceptions/invalid-name-error";
-import { InvalidCpfError } from "../exceptions/invalid-cpf-error";
-import { EntityNotSavedError } from "../exceptions/entity-not-saved-error"
-import { InvalidParamError } from "../exceptions/invalid-param-error";
-import { IUseCase } from "../shared-global/IUse-case";
+import { Student } from "../../entities/Student";
+import { IStudentRepository } from "../../repositories/User/IStudent-repository";
+import { crypto } from "../../../..";
+import { InvalidNameError } from "../../exceptions/invalid-name-error";
+import { InvalidCpfError } from "../../exceptions/invalid-cpf-error";
+import { EntityNotSavedError } from "../../exceptions/entity-not-saved-error"
+import { InvalidParamError } from "../../exceptions/invalid-param-error";
+import { IUseCase } from "../../shared-global/IUse-case";
 
 
 interface CreateStudentParams {

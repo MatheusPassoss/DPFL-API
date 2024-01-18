@@ -1,5 +1,5 @@
-import { Student } from "../entities/Student";
-import { IRepository } from "../shared-global/IRepository";
+import { Student } from "../../entities/Student";
+import { IRepository } from "../../shared-global/IRepository";
 
 
 export interface IStudentRepository extends IRepository<Student> {

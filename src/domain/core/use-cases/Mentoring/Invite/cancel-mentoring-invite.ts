@@ -1,10 +1,10 @@
-import { MentoringInvite } from "../entities/mentoringInvite";
-import { InvalidParamError } from "../exceptions/invalid-param-error";
-import { IMentorRepository } from "../repositories/IMentor-repositorie";
-import { IMentoringInviteRepository } from "../repositories/IMentoringInvite-repository";
-import { IUseCase } from "../shared-global/IUse-case";
-import { IStudentRepository } from "../repositories/IStudent-repository";
-import { EntityNotFound } from "../exceptions/entity-not-found";
+import { MentoringInvite } from "../../../entities/mentoringInvite";
+import { InvalidParamError } from "../../../exceptions/invalid-param-error";
+import { IMentorRepository } from "../../../repositories/User/IMentor-repositorie";
+import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository";
+import { IUseCase } from "../../../shared-global/IUse-case";
+import { IStudentRepository } from "../../../repositories/User/IStudent-repository";
+import { EntityNotFound } from "../../../exceptions/entity-not-found";
 
 
 interface CancelMentoringInviteParams {

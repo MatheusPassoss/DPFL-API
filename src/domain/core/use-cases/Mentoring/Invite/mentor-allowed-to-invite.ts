@@ -1,9 +1,9 @@
-import { MentoringInvite } from "../../entities/mentoringInvite";
-import { EntityNotFound } from "../../exceptions/entity-not-found";
-import { InvalidParamError } from "../../exceptions/invalid-param-error";
-import { IMentorRepository } from "../../repositories/IMentor-repositorie";
-import { IMentoringInviteRepository } from "../../repositories/IMentoringInvite-repository";
-import { IUseCase } from "../../shared-global/IUse-case";
+import { MentoringInvite } from "../../../entities/mentoringInvite";
+import { EntityNotFound } from "../../../exceptions/entity-not-found";
+import { InvalidParamError } from "../../../exceptions/invalid-param-error";
+import { IMentorRepository } from "../../../repositories/User/IMentor-repositorie";
+import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository";
+import { IUseCase } from "../../../shared-global/IUse-case";
 
 
 interface MentorAllowedToInviteParams {

@@ -1,5 +1,5 @@
-import { Mentor } from "../entities/mentor";
-import { IRepository } from "../shared-global/IRepository";
+import { Mentor } from "../../entities/mentor";
+import { IRepository } from "../../shared-global/IRepository";
 
 
 export interface IMentorRepository extends IRepository<Mentor> {

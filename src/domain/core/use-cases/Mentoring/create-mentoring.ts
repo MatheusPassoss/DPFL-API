@@ -1,10 +1,10 @@
-import { IMentoringRepository } from "../../repositories/IMentoring-repositorie"
+import { IMentoringRepository } from "../../repositories/Mentoring/IMentoring-repositorie"
 import { InvalidParamError } from "../../exceptions/invalid-param-error"
 import { Mentoring } from "../../entities/metoring"
 import { EntityNotSavedError } from "../../exceptions/entity-not-saved-error"
 import { crypto } from "../../../.."
-import { IStudentRepository } from "../../repositories/IStudent-repository"
-import { IMentorRepository } from "../../repositories/IMentor-repositorie"
+import { IStudentRepository } from "../../repositories/User/IStudent-repository"
+import { IMentorRepository } from "../../repositories/User/IMentor-repositorie"
 import { EntityNotFound } from "../../exceptions/entity-not-found"
 import { IUseCase } from "../../shared-global/IUse-case"
 
