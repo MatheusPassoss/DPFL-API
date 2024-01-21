@@ -21,8 +21,8 @@ export class CancelMentoring implements IUseCase<CancelMentoringParams, Mentorin
 
     constructor(repository: IMentoringRepository, studentRepository: IStudentRepository, mentorRepository: IMentorRepository) {
         this.repository = repository,
-            this.mentorRepository = mentorRepository,
-            this.studentRepository = studentRepository
+        this.mentorRepository = mentorRepository,
+        this.studentRepository = studentRepository
     }
 
     async execute(params: CancelMentoringParams): Promise<Mentoring> {

@@ -9,9 +9,23 @@ import { IUseCase } from "../../shared-global/IUse-case";
 
 
 interface CreateStudentParams {
+
+
     name: string
     email: string
     cpf: string
+    phone: string
+    bithDate: Date | string
+    address: {
+        cep: string,
+        city: string,
+        state: string,
+        road: string,
+        number: string,
+        complement?: string
+    }
+
+    
 }
 
 export class CreateStudentUseCase implements IUseCase<CreateStudentParams, Student>{
@@ -45,7 +59,7 @@ export class CreateStudentUseCase implements IUseCase<CreateStudentParams, Stude
             errors.push(new InvalidNameError(params.name));
         }
 
-        if (!params.cpf || params.name.trim().length != 11) {
+        if (!params.cpf || params.cpf.trim().length != 11) {
             errors.push(new InvalidCpfError(params.cpf));
         }
 

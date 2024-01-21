@@ -48,3 +48,5 @@ export class Mentoring implements IEntity{
     }
     
 }
+
+module.exports = Mentoring
