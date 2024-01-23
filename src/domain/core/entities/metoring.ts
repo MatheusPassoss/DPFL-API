@@ -31,6 +31,7 @@ export class Mentoring implements IEntity{
     private constructor(student: StudentParams, mentor: MentorParams, id: string, date?: Date) {
 
         this.idStudent = student.idStudent
+        
         this.nameStudent = student.name
         this.emailStudent = student.email
 

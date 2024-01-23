@@ -34,8 +34,8 @@ export class CreateMentoring implements IUseCase<CreateMentoringParams, Mentorin
         }
 
         const id = crypto.randomUUID();
-        const student = await this.mentorRepository.findById(params.idStudent)
-        const mentor = await this.studentRepository.findById(params.idMentor)
+        const student = await this.studentRepository.findById(params.idStudent)
+        const mentor = await this.mentorRepository.findById(params.idMentor)
 
         if (mentor && student) {
             console.log("entrou na função")

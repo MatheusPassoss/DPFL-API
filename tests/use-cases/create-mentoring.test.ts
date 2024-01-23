@@ -111,8 +111,8 @@ describe("Deve ser possível criar uma Mentoria", () => {
     test("Deve ser possível (finalmente) criar a Mentoria", async () => {
 
         const CreateMentoringParams = {
-            idStudent: idMentor,
-            idMentor: idStudent,
+            idStudent: idStudent,
+            idMentor: idMentor,
             date: date
         }
 
