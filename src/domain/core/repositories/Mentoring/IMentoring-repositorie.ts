@@ -1,5 +1,5 @@
-import { Mentoring} from "../entities/metoring";
-import { IRepository } from "../shared-global/IRepository";
+import { Mentoring} from "../../entities/metoring";
+import { IRepository } from "../../shared-global/IRepository";
 
 
 export interface IMentoringRepository extends IRepository<Mentoring> {
@@ -7,5 +7,6 @@ export interface IMentoringRepository extends IRepository<Mentoring> {
     findByStudentId: (studentId: string) => Promise<Mentoring[] | null>
     findByMentorId: (studentId: string) => Promise<Mentoring[] | null>
     findOneAndUpdate: (filter: Partial<Mentoring>, updatePartial: Partial<Mentoring>) => Mentoring
-    findOne: (filter: Partial<Mentoring>) => Promise<Mentoring>
+    findOne: (filter: Partial<Mentoring>) => Promise<Mentoring | null>
+    updateMany: (filter: Partial<Mentoring>) => Promise<Mentoring[] | null> 
 }

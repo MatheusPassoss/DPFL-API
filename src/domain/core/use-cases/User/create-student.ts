@@ -10,7 +10,7 @@ import { IUseCase } from "../../shared-global/IUse-case";
 
 interface CreateStudentParams {
 
-
+    id?: string
     name: string
     email: string
     cpf: string
@@ -42,7 +42,7 @@ export class CreateStudentUseCase implements IUseCase<CreateStudentParams, Stude
             throw new InvalidParamError(errors);
         }
         const id = crypto.randomUUID()
-        const newStudent = Student.create(params, id);
+        const newStudent = Student.create(params, params.id ? params.id : id);
 
         const saved = await this.repository.save(newStudent);
         if (!saved) {

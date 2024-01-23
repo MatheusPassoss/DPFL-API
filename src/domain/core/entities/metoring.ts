@@ -3,7 +3,7 @@ import { IEntity } from "../shared-global/IEntity"
 interface StudentParams {
     name: string
     email: string
-    id: string
+    idStudent: string
 }
 
 interface MentorParams {
@@ -28,9 +28,9 @@ export class Mentoring implements IEntity{
     updateAt: Date
     public status: "PROGRESS" | "STOPPED" | "CANCELED" | "COMPLETED"
     
-    private constructor(mentor: MentorParams, student: StudentParams, id: string, date?: Date) {
+    private constructor(student: StudentParams, mentor: MentorParams, id: string, date?: Date) {
 
-        this.idStudent = student.id
+        this.idStudent = student.idStudent
         this.nameStudent = student.name
         this.emailStudent = student.email
 
@@ -43,10 +43,8 @@ export class Mentoring implements IEntity{
         this.status = "PROGRESS"
     }
 
-    static create(mentor: MentorParams, student: StudentParams, id: string, date?: Date): Mentoring {
+    static create(student: StudentParams, mentor: MentorParams, id: string, date?: Date): Mentoring {
         return new Mentoring(student, mentor, id)
     }
     
 }
-
-module.exports = Mentoring

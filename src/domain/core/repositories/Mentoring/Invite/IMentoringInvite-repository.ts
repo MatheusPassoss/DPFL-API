@@ -4,9 +4,9 @@ import { MentoringInvite } from "../../../entities/mentoringInvite";
 export interface IMentoringInviteRepository extends IRepository<MentoringInvite> {
     listByMentorId: (idMentor: string) => Promise<MentoringInvite[] | null>
     listByStudentId: (idMentor: string) => Promise<MentoringInvite[] | null>
-    findByStudentId: (idStudent: string) => Promise<MentoringInvite>
+    findByStudentId: (idStudent: string) => Promise<MentoringInvite | null>
     acceptInvite: (newStatus: Partial<MentoringInvite>) => Promise<MentoringInvite>
     refuseAllPeddingInvites: (filterData: Partial<MentoringInvite>, updateData: Partial<MentoringInvite>) => void
-    findOne: (filter: Partial<MentoringInvite>) => Promise<MentoringInvite>
-    findOneAndUpdate: (filter: Partial<MentoringInvite>, updatePartial: Partial<MentoringInvite>) => Promise<MentoringInvite>
+    findOne: (filter: Partial<MentoringInvite>) => Promise<MentoringInvite | null>
+    findOneAndUpdate: (filter: Partial<MentoringInvite>, updatePartial: Partial<MentoringInvite>) => Promise<MentoringInvite | null>
 }

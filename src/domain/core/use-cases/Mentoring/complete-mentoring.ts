@@ -30,7 +30,7 @@ export class CompleteMentoring implements IUseCase<CompleteMentoringParams, Ment
         this.meetingRepository = meetingRepository
     }
 
-    async execute(params: CompleteMentoringParams) {
+    async execute(params: CompleteMentoringParams): Promise<Mentoring | null> {
 
         const errors = await this.validateParams(params);
 
@@ -51,7 +51,11 @@ export class CompleteMentoring implements IUseCase<CompleteMentoringParams, Ment
 
         const completed = this.repository.findOneAndUpdate(filter, update)
 
-        return completed
+        if (completed) {
+            return completed
+        }
+
+        return null
 
     }
 
@@ -73,7 +77,7 @@ export class CompleteMentoring implements IUseCase<CompleteMentoringParams, Ment
         if (hasEnoughMeetings.length < 12) {
             errors.push(new NotEnoughMeetings())
         }
-        
+
         if (!mentoringExits) errors.push(new EntityNotFound("Mentoring"));
 
         if (!mentorExits) errors.push(new EntityNotFound("Mentor"));

@@ -11,11 +11,12 @@ import { IUseCase } from "../../../shared-global/IUse-case";
 import { StudentAllowedToInvite } from "./student-allowed-to-invite";
 import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring-repositorie";
 import { StudentNotAllowedToInvite } from "../../../exceptions/student-not-allowed-to-invite";
+import { crypto } from "../../../../..";
 
 interface CreateMentoringInviteParams {
     idMentor: string
     idStudent: string
-    createAt: Date
+    createAt: Date | string
 }
 
 export class CreateMentoringInvite implements IUseCase<CreateMentoringInviteParams, MentoringInvite>{
@@ -25,8 +26,11 @@ export class CreateMentoringInvite implements IUseCase<CreateMentoringInvitePara
     private readonly studentRepository: IStudentRepository
     private readonly mentorRepository: IMentorRepository
 
-    constructor(repository: IMentoringInviteRepository) {
+    constructor(repository: IMentoringInviteRepository, studentRepository: IStudentRepository, mentorRepository: IMentorRepository, mentoringRepository: IMentoringRepository) {
         this.repository = repository
+        this.studentRepository = studentRepository
+        this.mentorRepository = mentorRepository
+        this.mentoringRepository = mentoringRepository
     }
 
     async execute(params: CreateMentoringInviteParams): Promise<MentoringInvite> {
@@ -53,7 +57,7 @@ export class CreateMentoringInvite implements IUseCase<CreateMentoringInvitePara
         const errors: Error[] = [];
 
         const studentExists = this.studentRepository.findById(params.idStudent)
-        const mentorExists = this.mentorRepository.findById(params.idStudent)
+        const mentorExists = this.mentorRepository.findById(params.idMentor)
         const mentorAllowedToInvite = await new MentorAllowedToInvite(this.mentorRepository, this.repository).execute({mentorId: params.idMentor})
         const studentAllowedToInvite = await new StudentAllowedToInvite(this.studentRepository, this.mentoringRepository).execute({idStudent: params.idStudent})
 

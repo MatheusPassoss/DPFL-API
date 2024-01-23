@@ -10,9 +10,9 @@ import { IUseCase } from "../../shared-global/IUse-case"
 
 
 interface CreateMentoringParams {
-    mentorId: string,
-    studentId: string,
-    date?: Date
+    idStudent: string,
+    idMentor: string,
+    date?: Date | string
 }
 
 export class CreateMentoring implements IUseCase<CreateMentoringParams, Mentoring> {
@@ -26,41 +26,55 @@ export class CreateMentoring implements IUseCase<CreateMentoringParams, Mentorin
         this.mentorRepository = mentorRepository
     }
 
-    async execute(params: CreateMentoringParams): Promise<Mentoring> {
+    async execute(params: CreateMentoringParams): Promise<Mentoring | null> {
         const errors = this.validateParams(params);
 
         if (errors) {
             throw new InvalidParamError(errors);
         }
-        
+
         const id = crypto.randomUUID();
-        const studentParams = await this.mentorRepository.findById(params.mentorId)
-        const mentorParams = await this.studentRepository.findById(params.studentId)
+        const student = await this.mentorRepository.findById(params.idStudent)
+        const mentor = await this.studentRepository.findById(params.idMentor)
 
-        const newMentoring = Mentoring.create({
-            name: mentorParams.name,
-            email: mentorParams.email,
-            id: mentorParams.id
-        }, 
-        {
-            name: studentParams.name,
-            email: studentParams.email,
-            id: studentParams.id
-        }, id);
+        if (mentor && student) {
+            console.log("entrou na função")
 
-        const saved = await this.repository.save(newMentoring);
-        if (!saved) {
-            throw new EntityNotSavedError();
+            console.log(student)
+            console.log(mentor)
+
+            const studentParams = {
+                name: student.name,
+                email: student.email,
+                idStudent: student.id
+            }
+
+            const mentorParams = {
+                name: mentor.name,
+                email: mentor.email,
+                id: mentor.id
+            }
+
+            const newMentoring = Mentoring.create(studentParams, mentorParams, id, new Date());
+
+            console.log(newMentoring)
+            const saved = await this.repository.save(newMentoring);
+            if (!saved) {
+                throw new EntityNotSavedError();
+            }
+
+            return saved;
+
         }
 
-        return saved;
+        return null
     }
 
     private validateParams(params: CreateMentoringParams) {
         const errors: Error[] = [];
 
-        const mentorExits = this.mentorRepository.findById(params.mentorId)
-        const studentExists = this.studentRepository.findById(params.studentId)
+        const mentorExits = this.mentorRepository.findById(params.idStudent)
+        const studentExists = this.studentRepository.findById(params.idMentor)
 
         if (!mentorExits) errors.push(new EntityNotFound("Mentor"));
 

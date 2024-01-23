@@ -48,8 +48,8 @@ export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInvitePara
             }
 
             let updateAllInvites: Partial<MentoringInvite> = {
-                updateAt: new Date(),
-                status: "REFUSED"
+                status: "REFUSED",
+                updateAt: new Date()
             }
 
             this.MentoringInviteRepository.refuseAllPeddingInvites(filterAllInvites, updateAllInvites)
