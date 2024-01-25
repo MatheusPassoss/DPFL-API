@@ -1,10 +1,12 @@
-import { MentoringInvite } from "../../../entities/mentoringInvite";
+import { MentoringInvite } from "../../../entities/mentoring-invite";
 import { InvalidParamError } from "../../../exceptions/invalid-param-error";
-import { IMentorRepository } from "../../../repositories/User/IMentor-repositorie";
+import { IMentorRepository } from "../../../repositories/User/IMentor-repository";
 import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository";
 import { IUseCase } from "../../../shared-global/IUse-case";
 import { IStudentRepository } from "../../../repositories/User/IStudent-repository";
 import { EntityNotFound } from "../../../exceptions/entity-not-found";
+import { InvalidInviteStatusError } from "../../../exceptions/invalid-invite-status-error";
+import { EntityNotUpdatedError } from "../../../exceptions/entity-not-updated-error";
 
 
 interface CancelMentoringInviteParams {
@@ -12,7 +14,6 @@ interface CancelMentoringInviteParams {
     idStudent: string,
     idMentor: string,
 }
-
 
 export class CancelMentoringInvite implements IUseCase<CancelMentoringInviteParams, MentoringInvite> {
 
@@ -26,10 +27,9 @@ export class CancelMentoringInvite implements IUseCase<CancelMentoringInvitePara
         this.mentorRepository = mentorRepository
     }
 
+    async execute(params: CancelMentoringInviteParams): Promise<MentoringInvite> {
 
-    async execute(params: CancelMentoringInviteParams) {
-
-        const errors = this.validateParams(params);
+        const errors = await this.validateParams(params);
 
         if (errors) {
             throw new InvalidParamError(errors);
@@ -46,19 +46,22 @@ export class CancelMentoringInvite implements IUseCase<CancelMentoringInvitePara
             updateAt: new Date(),
         }
 
-        const canceled = this.repository.findOneAndUpdate(filter, update)
+        const canceled = await this.repository.cancelInvite(filter)
+        if (!canceled) {
+            throw new EntityNotUpdatedError()
+        }
 
         return canceled
 
     }
 
-    validateParams(params: CancelMentoringInviteParams) {
+    private async validateParams(params: CancelMentoringInviteParams): Promise<Error[] | null> {
 
         const errors: Error[] = [];
 
-        const mentorExits = this.mentorRepository.findById(params.idMentor)
-        const studentExists = this.studentRepository.findById(params.idStudent)
-        const inviteExists = this.repository.findById(params.id)
+        const mentorExits = await this.mentorRepository.findById(params.idMentor)
+        const studentExists = await this.studentRepository.findById(params.idStudent)
+        const inviteExists = await this.repository.findById(params.id)
 
         if (!inviteExists) errors.push(new EntityNotFound("Mentoring Invite"));
 
@@ -66,8 +69,11 @@ export class CancelMentoringInvite implements IUseCase<CancelMentoringInvitePara
 
         if (!studentExists) errors.push(new EntityNotFound("Student"));
 
-        return errors.length > 0 ? errors : null;
+        if (inviteExists && inviteExists.status != "PEDDING") {
+            errors.push(new InvalidInviteStatusError(inviteExists.status))
+        }
 
+        return errors.length > 0 ? errors : null;
 
     }
 }

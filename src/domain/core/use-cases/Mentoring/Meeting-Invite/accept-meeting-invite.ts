@@ -1,5 +1,5 @@
 
-import { MentoringMeetingInvite } from "../../../entities/MentoringMeetingInvite"
+import { MentoringMeetingInvite } from "../../../entities/mentoring-meeting-invite"
 import { IMeetingInviteRepository } from "../../../repositories/Mentoring/Meeting-invite/IMentoring-meeting-invite-repository"
 import { IUseCase } from "../../../shared-global/IUse-case"
 import { EntityNotFound } from "../../../exceptions/entity-not-found"
@@ -33,7 +33,7 @@ export class AcceptMeetingInvite implements IUseCase<AcceptMeetingInviteParams, 
 
         const updateMeetingInvite: Partial<MentoringMeetingInvite> = {
             status: "ACEPPTED", 
-            updateAt: new Date().toLocaleDateString()
+            updateAt: new Date()
         }
 
         const acceptInvite = await this.repository.findOneAndUpdate(filterMeetingInvite, updateMeetingInvite)
@@ -45,7 +45,7 @@ export class AcceptMeetingInvite implements IUseCase<AcceptMeetingInviteParams, 
 
     }
 
-    private async validateParams(params: AcceptMeetingInviteParams) {
+    private async validateParams(params: AcceptMeetingInviteParams): Promise<Error[] | null> {
         const errors: Error[] = []
 
         const meetingInviteExists = await this.repository.findById(params.idMeetingInvite)

@@ -1,5 +1,5 @@
 
-import { MentoringMeetingInvite } from "../../../entities/MentoringMeetingInvite"
+import { MentoringMeetingInvite } from "../../../entities/mentoring-meeting-invite"
 import { IMeetingInviteRepository } from "../../../repositories/Mentoring/Meeting-invite/IMentoring-meeting-invite-repository"
 import { IUseCase } from "../../../shared-global/IUse-case"
 import { EntityNotFound } from "../../../exceptions/entity-not-found"
@@ -37,6 +37,7 @@ export class CanceMeetingInvite implements IUseCase<CanceMeetingInviteParams, Me
         }
 
         const canceledInvite = await this.repository.findOneAndUpdate(filterMeetingInvite, updateMeetingInvite)
+        
         if (!canceledInvite) {
             throw new EntityNotUpdatedError()
         }
@@ -45,7 +46,7 @@ export class CanceMeetingInvite implements IUseCase<CanceMeetingInviteParams, Me
 
     }
 
-    private async validateParams(params: CanceMeetingInviteParams) {
+    private async validateParams(params: CanceMeetingInviteParams): Promise<Error[] | null> {
         const errors: Error[] = []
 
         const meetingInviteExists = await this.repository.findById(params.idMeetingInvite)

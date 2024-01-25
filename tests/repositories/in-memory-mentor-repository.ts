@@ -1,22 +1,46 @@
 import { Mentor } from "../../src/domain/core/entities/mentor";
-import { IMentorRepository } from "../../src/domain/core/repositories/User/IMentor-repositorie";
+import { EntityNotFound } from "../../src/domain/core/exceptions/entity-not-found";
+import { InvalidDataError } from "../../src/domain/core/exceptions/invalid-data-error";
+import { IMentorRepository } from "../../src/domain/core/repositories/User/IMentor-repository";
 
 
 export class InMemoryMentorRepository implements IMentorRepository {
-    public mentors: Mentor[] = []
+    public mentors: Mentor[] = [
+
+        {
+            id: "89852778-6118-428c-8e49-138e71643faf",
+            name: "Digão",
+            email: "digão@example.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                road: "Rua3",
+                number: "789",
+            }
+        }
+
+    ]
 
     async findById(id: string): Promise<Mentor | null> {
-       const mentor = await this.mentors.find(mentor => mentor.id == id)
-       
-       if (mentor) {
-        return mentor
-       }
+        const mentor = await this.mentors.find(mentor => mentor.id == id)
 
-       return null
-    } 
+        if (mentor) {
+            return mentor
+        }
+
+        return null
+    }
 
 
-    save(mentor: Mentor): Mentor {
+    async save(mentor: Mentor): Promise<Mentor> {
+
+        if (!mentor) {
+            throw new InvalidDataError()
+        }
 
         this.mentors.push(mentor)
 
@@ -24,16 +48,20 @@ export class InMemoryMentorRepository implements IMentorRepository {
     }
 
 
+    async findByEmail(email: string): Promise<Mentor> {
 
-    update: (entity: Partial<Mentor>) => Promise<Mentor | null>;
+        const mentor = await this.mentors.find(mentor => mentor.email == email)
+        if (!mentor) {
+            throw new EntityNotFound("Mentor")
+        }
+
+        return mentor
+
+    }
 
 
-
-
-
-
-    findByEmail: (email: string) => Promise<Mentor | null>;
-    findByStudent: (emailStudent: string) => Promise<Mentor | null>;
-    listMentors: () => Promise<Mentor[] | null>;
-    listWithoutStudent: () => Promise<Mentor[] | null>;
+    update: (entity: Partial<Mentor>) => Promise<Mentor>;
+    findByStudent: (emailStudent: string) => Promise<Mentor>;
+    listMentors: () => Promise<Mentor[]>;
+    listWithoutStudent: () => Promise<Mentor[]>;
 }

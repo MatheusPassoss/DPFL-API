@@ -7,6 +7,7 @@ import { EntityNotSavedError } from "../../exceptions/entity-not-saved-error"
 import { InvalidParamError } from "../../exceptions/invalid-param-error";
 import { IUseCase } from "../../shared-global/IUse-case";
 
+///     `//FAZ O PARSE DA DATAAAAAA`
 
 interface CreateStudentParams {
 
@@ -15,7 +16,7 @@ interface CreateStudentParams {
     email: string
     cpf: string
     phone: string
-    bithDate: Date | string
+    birthDate: Date
     address: {
         cep: string,
         city: string,
@@ -52,7 +53,7 @@ export class CreateStudentUseCase implements IUseCase<CreateStudentParams, Stude
         return saved;
     }
 
-    private validateParams(params: CreateStudentParams) {
+    private validateParams(params: CreateStudentParams): Error[] | null {
         const errors: Error[] = [];
 
         if (!params.name || params.name.trim().length < 2 || params.name.trim().length > 255) {

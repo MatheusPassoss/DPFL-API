@@ -1,5 +1,5 @@
 import { Mentor } from "../../entities/mentor";
-import { IMentorRepository } from "../../repositories/User/IMentor-repositorie";
+import { IMentorRepository } from "../../repositories/User/IMentor-repository";
 import { crypto } from "../../../..";
 import { InvalidNameError } from "../../exceptions/invalid-name-error";
 import { InvalidCpfError } from "../../exceptions/invalid-cpf-error";
@@ -15,7 +15,7 @@ interface CreateMentorParams {
     email: string
     cpf: string
     phone: string
-    bithDate: Date | string
+    birthDate: Date | string
     address: {
         cep: string,
         city: string,
@@ -25,7 +25,6 @@ interface CreateMentorParams {
         complement?: string
     }
 
-    
 }
 
 export class CreateMentorUseCase implements IUseCase<CreateMentorParams, Mentor>{
@@ -52,7 +51,7 @@ export class CreateMentorUseCase implements IUseCase<CreateMentorParams, Mentor>
         return saved;
     }
 
-    private validateParams(params: CreateMentorParams) {
+    private validateParams(params: CreateMentorParams): Error[] | null {
         const errors: Error[] = [];
 
         if (!params.name || params.name.trim().length < 2 || params.name.trim().length > 255) {

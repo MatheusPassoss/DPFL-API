@@ -3,14 +3,13 @@ export interface StudentData {
   email: string,
   cpf: string,
   phone: string,
-  bithDate: string | Date,
+  birthDate: Date,
   address: {
       cep: string,
       city: string,
       state: string,
       road: string,
       number: string,
-
 }
 }
 
@@ -21,7 +20,7 @@ export class Student implements StudentData {
   email: string
   cpf: string
   phone: string
-  bithDate: string | Date
+  birthDate: Date
   address: {
       cep: string
       city: string
@@ -36,7 +35,7 @@ export class Student implements StudentData {
     this.email = student.email;
     this.cpf = student.cpf;
     this.phone = student.phone
-    this.bithDate = student.bithDate
+    this.birthDate = student.birthDate
     this.address = student.address
   }
 

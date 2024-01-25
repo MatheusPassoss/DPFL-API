@@ -1,13 +1,14 @@
-import { IMentoringRepository } from "../../repositories/Mentoring/IMentoring-repositorie";
+import { IMentoringRepository } from "../../repositories/Mentoring/IMentoring-repository";
 import { IUseCase } from "../../shared-global/IUse-case";
-import { IMentorRepository } from "../../repositories/User/IMentor-repositorie";
+import { IMentorRepository } from "../../repositories/User/IMentor-repository";
 import { IStudentRepository } from "../../repositories/User/IStudent-repository";
 import { InvalidParamError } from "../../exceptions/invalid-param-error";
 import { EntityNotFound } from "../../exceptions/entity-not-found";
 import { Mentoring } from "../../entities/metoring";
 import { IMeetingRepository } from "../../repositories/Mentoring/Meeting/IMentoring-meeting-repository";
-import { MentoringMeeting } from "../../entities/MentoringMeeting";
+import { MentoringMeeting } from "../../entities/mentoring-meeting";
 import { NotEnoughMeetings } from "../../exceptions/not-enough-meetings";
+import { EntityNotUpdatedError } from "../../exceptions/entity-not-updated-error";
 
 interface CompleteMentoringParams {
     id: string
@@ -30,7 +31,7 @@ export class CompleteMentoring implements IUseCase<CompleteMentoringParams, Ment
         this.meetingRepository = meetingRepository
     }
 
-    async execute(params: CompleteMentoringParams): Promise<Mentoring | null> {
+    async execute(params: CompleteMentoringParams): Promise<Mentoring> {
 
         const errors = await this.validateParams(params);
 
@@ -51,15 +52,15 @@ export class CompleteMentoring implements IUseCase<CompleteMentoringParams, Ment
 
         const completed = this.repository.findOneAndUpdate(filter, update)
 
-        if (completed) {
-            return completed
+        if (!completed) {
+            throw new EntityNotUpdatedError();
         }
 
-        return null
+        return  completed
 
     }
 
-    async validateParams(params: CompleteMentoringParams) {
+    async validateParams(params: CompleteMentoringParams): Promise<Error[] | null> {
 
         const errors: Error[] = [];
         const mentoringExits = this.repository.findById(params.id)
@@ -72,9 +73,9 @@ export class CompleteMentoring implements IUseCase<CompleteMentoringParams, Ment
             status: "CONFIRMED"
         }
 
-        const hasEnoughMeetings: MentoringMeeting[] = await this.meetingRepository.findMany(filterMeetings)
+        const hasEnoughMeetings: MentoringMeeting[] | null = await this.meetingRepository.findMany(filterMeetings)
 
-        if (hasEnoughMeetings.length < 12) {
+        if (hasEnoughMeetings && hasEnoughMeetings.length < 12) {
             errors.push(new NotEnoughMeetings())
         }
 

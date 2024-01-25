@@ -1,5 +1,5 @@
-import { MentoringMeeting } from "../../../entities/MentoringMeeting";
-import { IMentorRepository } from "../../../repositories/User/IMentor-repositorie";
+import { MentoringMeeting } from "../../../entities/mentoring-meeting";
+import { IMentorRepository } from "../../../repositories/User/IMentor-repository";
 import { IMeetingRepository } from "../../../repositories/Mentoring/Meeting/IMentoring-meeting-repository";
 import { IStudentRepository } from "../../../repositories/User/IStudent-repository";
 import { IUseCase } from "../../../shared-global/IUse-case";
@@ -7,7 +7,7 @@ import { EntityNotFound } from "../../../exceptions/entity-not-found";
 import { InvalidParamError } from "../../../exceptions/invalid-param-error";
 import { EntityNotSavedError } from "../../../exceptions/entity-not-saved-error";
 import { IMeetingInviteRepository } from "../../../repositories/Mentoring/Meeting-invite/IMentoring-meeting-invite-repository";
-import { MentoringMeetingInvite } from "../../../entities/MentoringMeetingInvite";
+import { MentoringMeetingInvite } from "../../../entities/mentoring-meeting-invite";
 import { MeetingInviteNotAceppted } from "../../../exceptions/meeting-invite-not-aceppted";
 
 interface CreateMentoringMeetingParams {
@@ -47,6 +47,7 @@ export class CreateMentoringMeeting implements IUseCase<CreateMentoringMeetingPa
         if (!saved) {
             throw new EntityNotSavedError()
         }
+        
         return saved
     }
 

@@ -1,11 +1,11 @@
-import { MentoringMeeting } from "../../../entities/MentoringMeeting";
+import { MentoringMeeting } from "../../../entities/mentoring-meeting";
 import { EntityNotFound } from "../../../exceptions/entity-not-found";
 import { IMeetingRepository } from "../../../repositories/Mentoring/Meeting/IMentoring-meeting-repository";
 import { InvalidParamError } from "../../../exceptions/invalid-param-error";
 import { EntityNotUpdatedError } from "../../../exceptions/entity-not-updated-error";
 import { IUseCase } from "../../../shared-global/IUse-case";
 import { IStudentRepository } from "../../../repositories/User/IStudent-repository";
-import { IMentorRepository } from "../../../repositories/User/IMentor-repositorie";
+import { IMentorRepository } from "../../../repositories/User/IMentor-repository";
 import { DateInUse } from "../../../exceptions/date-in-use";
 
 interface UpdateMentoringMeetingParams {

@@ -1,22 +1,22 @@
-import { MentoringInvite } from "../../../entities/mentoringInvite";
+import { MentoringInvite } from "../../../entities/mentoring-invite";
 import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository"
 import { InvalidParamError } from "../../../exceptions/invalid-param-error";
 import { IStudentRepository } from "../../../repositories/User/IStudent-repository";
-import { IMentorRepository } from "../../../repositories/User/IMentor-repositorie";
+import { IMentorRepository } from "../../../repositories/User/IMentor-repository";
 import { EntityNotFound } from "../../../exceptions/entity-not-found";
 import { MentorAllowedToInvite } from "./mentor-allowed-to-invite";
 import { MentorNotAllowedToInvite } from "../../../exceptions/mentor-not-allowed-to-invite";
 import { EntityNotSavedError } from "../../../exceptions/entity-not-saved-error";
 import { IUseCase } from "../../../shared-global/IUse-case";
 import { StudentAllowedToInvite } from "./student-allowed-to-invite";
-import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring-repositorie";
+import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring-repository";
 import { StudentNotAllowedToInvite } from "../../../exceptions/student-not-allowed-to-invite";
 import { crypto } from "../../../../..";
 
 interface CreateMentoringInviteParams {
     idMentor: string
     idStudent: string
-    createAt: Date | string
+    createAt: Date
 }
 
 export class CreateMentoringInvite implements IUseCase<CreateMentoringInviteParams, MentoringInvite>{
@@ -53,12 +53,12 @@ export class CreateMentoringInvite implements IUseCase<CreateMentoringInvitePara
         return saved;
     }
 
-    private async validateParams(params: CreateMentoringInviteParams) {
+    private async validateParams(params: CreateMentoringInviteParams): Promise<Error[] | null> {
         const errors: Error[] = [];
 
         const studentExists = this.studentRepository.findById(params.idStudent)
         const mentorExists = this.mentorRepository.findById(params.idMentor)
-        const mentorAllowedToInvite = await new MentorAllowedToInvite(this.mentorRepository, this.repository).execute({mentorId: params.idMentor})
+        const mentorAllowedToInvite = await new MentorAllowedToInvite(this.mentorRepository, this.repository, this.mentoringRepository).execute({mentorId: params.idMentor})
         const studentAllowedToInvite = await new StudentAllowedToInvite(this.studentRepository, this.mentoringRepository).execute({idStudent: params.idStudent})
 
 

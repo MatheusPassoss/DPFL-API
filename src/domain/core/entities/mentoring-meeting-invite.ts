@@ -4,7 +4,7 @@ export class MentoringMeetingInvite implements IEntity {
 
     public readonly id: string
     public readonly createAt: Date;
-    public updateAt: Date | string;
+    public updateAt: Date;
 
     public readonly idStudent: string
     public readonly idMentor: string

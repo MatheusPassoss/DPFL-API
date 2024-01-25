@@ -1,8 +1,8 @@
-import { MentoringMeetingInvite } from "../../../entities/MentoringMeetingInvite"
+import { MentoringMeetingInvite } from "../../../entities/mentoring-meeting-invite"
 import { IMeetingInviteRepository } from "../../../repositories/Mentoring/Meeting-invite/IMentoring-meeting-invite-repository"
 import { IUseCase } from "../../../shared-global/IUse-case"
 import { IStudentRepository } from "../../../repositories/User/IStudent-repository"
-import { IMentorRepository } from "../../../repositories/User/IMentor-repositorie"
+import { IMentorRepository } from "../../../repositories/User/IMentor-repository"
 import { EntityNotSavedError } from "../../../exceptions/entity-not-saved-error"
 import { InvalidParamError } from "../../../exceptions/invalid-param-error"
 import { EntityNotFound } from "../../../exceptions/entity-not-found"
@@ -14,7 +14,7 @@ interface CreateMeetingInviteParams {
     date: Date
 }
 
-export class CreateMeetingInvite implements IUseCase<CreateMeetingInviteParams, MentoringMeetingInvite>{
+export class CreateMeetingInvite implements IUseCase<CreateMeetingInviteParams, MentoringMeetingInvite> {
 
     private readonly repository: IMeetingInviteRepository
     private readonly studentRepository: IStudentRepository;
@@ -28,8 +28,8 @@ export class CreateMeetingInvite implements IUseCase<CreateMeetingInviteParams, 
     }
 
     async execute(params: CreateMeetingInviteParams): Promise<MentoringMeetingInvite> {
-        
-        const errors = this.validateParams(params)
+
+        const errors = await this.validateParams(params)
 
         if (errors) {
             throw new InvalidParamError(errors)
@@ -37,7 +37,7 @@ export class CreateMeetingInvite implements IUseCase<CreateMeetingInviteParams, 
 
         const id = crypto.randomUUID()
         const newMentoringMeetingInvite = MentoringMeetingInvite.create(id, params.idStudent, params.idMentor, params.date);
-        
+
         const created = await this.repository.save(newMentoringMeetingInvite)
         if (!created) {
             throw new EntityNotSavedError()
@@ -46,7 +46,7 @@ export class CreateMeetingInvite implements IUseCase<CreateMeetingInviteParams, 
         return created
     }
 
-    validateParams(params: CreateMeetingInviteParams) {
+    private async validateParams(params: CreateMeetingInviteParams): Promise<Error[] | null> {
 
         const errors: Error[] = [];
 
@@ -73,6 +73,6 @@ export class CreateMeetingInvite implements IUseCase<CreateMeetingInviteParams, 
             errors.push(new EntityNotFound("Mentor"))
         }
 
-        return errors.length > 0 ? errors : null;
+        return errors.length > 0 ? errors : null
     }
 }   

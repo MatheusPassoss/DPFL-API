@@ -2,8 +2,10 @@ import { IStudentRepository } from "../../../repositories/User/IStudent-reposito
 import { IUseCase } from "../../../shared-global/IUse-case";
 import { EntityNotFound } from "../../../exceptions/entity-not-found";
 import { InvalidParamError } from "../../../exceptions/invalid-param-error";
-import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring-repositorie";
+import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring-repository";
 import { Mentoring } from "../../../entities/metoring";
+import { MentoringInvite } from "../../../entities/mentoring-invite";
+import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository";
  
 
 interface StudentAllowedToInviteParams {
@@ -13,6 +15,7 @@ interface StudentAllowedToInviteParams {
 
 export class StudentAllowedToInvite implements IUseCase<StudentAllowedToInviteParams, boolean> {
     private readonly studentRepository: IStudentRepository
+    private readonly mentoringInviteRepository: IMentoringInviteRepository
     private readonly mentoringRepository: IMentoringRepository
 
     constructor(studentRepository: IStudentRepository, mentoringRepository: IMentoringRepository) {
@@ -28,14 +31,21 @@ export class StudentAllowedToInvite implements IUseCase<StudentAllowedToInvitePa
             throw new InvalidParamError(errors);
         }
 
-        const filter: Partial<Mentoring> = {
+        const filterMentoringInviteAccepted: Partial<MentoringInvite> = {
+            idStudent: params.idStudent,
+            status: "ACCEPTED"
+        }
+
+        const filterMentoringInProgress: Partial<Mentoring> = {
             idStudent: params.idStudent,
             status: "PROGRESS"
         }
 
-        const mentoringInProgressOrNull: Mentoring | null = await this.mentoringRepository.findOne(filter);
 
-        return mentoringInProgressOrNull == null
+        const mentoringInviteAcceptedOrNull: MentoringInvite | null = await this.mentoringInviteRepository.findAcceptedInvite(filterMentoringInviteAccepted)
+        const mentoringInProgressOrNull: Mentoring | null = await this.mentoringRepository.findOne(filterMentoringInProgress);
+
+        return mentoringInProgressOrNull === null && mentoringInviteAcceptedOrNull === null
     }
 
     private async validateParams(idStudent: string): Promise<Error[] | null> {

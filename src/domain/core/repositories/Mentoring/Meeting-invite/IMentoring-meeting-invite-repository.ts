@@ -1,5 +1,5 @@
 
-import { MentoringMeetingInvite } from "../../../entities/MentoringMeetingInvite";
+import { MentoringMeetingInvite } from "../../../entities/mentoring-meeting-invite";
 import { IRepository } from "../../../shared-global/IRepository";
 
 

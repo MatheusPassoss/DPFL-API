@@ -2,7 +2,7 @@ import { InMemoryMentorRepository } from "../repositories/in-memory-mentor-repos
 import { InMemoryMentoringRepository } from "../repositories/in-memory-mentoring-repository"
 import { InMemoryStudentRepository } from "../repositories/in-memory-students-repository"
 import { CreateStudentUseCase } from "../../src/domain/core/use-cases/User/create-student"
-import { InMemoryMentoringInviteRepository } from "../repositories/in-memory-mentoringInvite-repository"
+import { InMemoryMentoringInviteRepository } from "../repositories/in-memory-mentoring-invite-repository"
 import { crypto } from "../../src"
 import { CreateMentorUseCase } from "../../src/domain/core/use-cases/User/create-mentor"
 import { CreateMentoringInvite } from "../../src/domain/core/use-cases/Mentoring/Invite/create-metoring-invite"
@@ -22,7 +22,7 @@ describe("Deve ser possível criar uma Mentoria", () => {
     const acceptInvite = new AcceptMentoringInvite(MentoringInvite)
     const createRealMentoring = new CreateMentoring(MentoringRepository, StudentRepository, MentorRepository,)
 
-    const date = new Date().toLocaleDateString()
+    const date = new Date() 
 
 
     const idStudent = crypto.randomUUID()
@@ -34,7 +34,7 @@ describe("Deve ser possível criar uma Mentoria", () => {
         email: "passos@passos",
         cpf: "12345678999",
         phone: "11 947249777",
-        bithDate: "10-11-2002",
+        birthDate: new Date(),
         address: {
             cep: "05856",
             city: "teste",
@@ -50,7 +50,7 @@ describe("Deve ser possível criar uma Mentoria", () => {
         email: "renato@calabro",
         cpf: "12345678999",
         phone: "11 947249777",
-        bithDate: "10-11-2002",
+        birthDate: new Date(),
         address: {
             cep: "05856",
             city: "teste",
@@ -72,7 +72,6 @@ describe("Deve ser possível criar uma Mentoria", () => {
 
         const mentor = await createMentorUseCase.execute(mentorSchema)
 
-        if (mentor) console.log(mentor);
         expect(mentor).toEqual(mentorSchema)
 
     })
@@ -86,7 +85,7 @@ describe("Deve ser possível criar uma Mentoria", () => {
         }
 
         const Invite = await createMentoring.execute(InviteParams)
-        if (Invite) console.log(Invite)
+        
         expect(Invite.idStudent).toBe(idStudent)
         expect(Invite.idMentor).toBe(idMentor)
 
@@ -99,7 +98,8 @@ describe("Deve ser possível criar uma Mentoria", () => {
         if (mentoring) {
             const params = {
                 idMentoringInvite: mentoring.id,
-                idStudent: idStudent
+                idStudent: idStudent,
+                idMentor: idMentor
             }
 
             const accepted = await acceptInvite.execute(params)
@@ -117,10 +117,9 @@ describe("Deve ser possível criar uma Mentoria", () => {
         }
 
        const Mentoring = await createRealMentoring.execute(CreateMentoringParams)
-       
-       if (Mentoring) console.log(Mentoring);
 
-       expect(Mentoring).toBeTruthy()
+       expect(Mentoring?.idMentor).toBe(idMentor)
+       expect(Mentoring?.idStudent).toBe(idStudent)
 
     })
 

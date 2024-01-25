@@ -1,13 +1,15 @@
-import { MentoringInvite } from "../../../entities/mentoringInvite";
+import { MentoringInvite } from "../../../entities/mentoring-invite";
 import { EntityNotFound } from "../../../exceptions/entity-not-found";
 import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository";
 import { InvalidParamError } from "../../../exceptions/invalid-param-error";
 import { EntityNotUpdatedError } from "../../../exceptions/entity-not-updated-error";
 import { IUseCase } from "../../../shared-global/IUse-case";
+import { InvitationAlreadyAccepted } from "../../../exceptions/invitation-already-accepted-error";
 
 interface AcceptMentoringInviteParams {
-    idMentoringInvite: string,
+    idMentoringInvite: string
     idStudent: string
+    idMentor: string
 }
 
 export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInviteParams, MentoringInvite> {
@@ -18,8 +20,8 @@ export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInvitePara
         this.MentoringInviteRepository = InviteRepository
     }
 
-    async execute(params: AcceptMentoringInviteParams) {
-        const errors = await this.validateParams(params.idMentoringInvite)
+    async execute(params: AcceptMentoringInviteParams): Promise<MentoringInvite> {
+        const errors = await this.validateParams(params)
 
         if (errors) {
             throw new InvalidParamError(errors);
@@ -28,6 +30,7 @@ export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInvitePara
         const filterInvite: Partial<MentoringInvite> = {
             id: params.idMentoringInvite,
             idStudent: params.idStudent,
+            idMentor: params.idMentor,
             status: "PEDDING"
         }
 
@@ -36,11 +39,13 @@ export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInvitePara
             updateAt: new Date()
         }
 
-        const update = await this.MentoringInviteRepository.findOneAndUpdate(filterInvite, updateInvite);
+        const update = await this.MentoringInviteRepository.acceptInvite(filterInvite, updateInvite);
 
         if (!update) {
             throw new EntityNotUpdatedError()
         } else {
+
+            console.log(update)
 
             let filterAllInvites: Partial<MentoringInvite> = {
                 idStudent: params.idStudent,
@@ -58,13 +63,24 @@ export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInvitePara
         return update;
     }
 
-    private async validateParams(idMentoringInvite: string) {
+    private async validateParams(params: AcceptMentoringInviteParams): Promise<Error[] | null> {
         const errors: Error[] = []
 
-        const inviteExists = await this.MentoringInviteRepository.findById(idMentoringInvite)
+        const inviteExists = await this.MentoringInviteRepository.findById(params.idMentoringInvite)
+
+        const invitationAceptedFilter: Partial<MentoringInvite> = {
+            idStudent: params.idStudent,
+            status: "ACCEPTED"
+        }
+
+        const inviteAcepptedExits = await this.MentoringInviteRepository.findAcceptedInvite(invitationAceptedFilter)
 
         if (!inviteExists) {
             errors.push(new EntityNotFound("Mentoring Invite"))
+        }
+        
+        if (inviteAcepptedExits) {
+            errors.push(new InvitationAlreadyAccepted())
         }
 
         return errors.length > 0 ? errors : null

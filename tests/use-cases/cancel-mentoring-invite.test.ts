@@ -1,0 +1,52 @@
+import { InMemoryMentorRepository } from "../repositories/in-memory-mentor-repository"
+import { InMemoryMentoringRepository } from "../repositories/in-memory-mentoring-repository"
+import { InMemoryStudentRepository } from "../repositories/in-memory-students-repository"
+import { CreateStudentUseCase } from "../../src/domain/core/use-cases/User/create-student"
+import { InMemoryMentoringInviteRepository } from "../repositories/in-memory-mentoring-invite-repository"
+import { crypto } from "../../src"
+import { CreateMentorUseCase } from "../../src/domain/core/use-cases/User/create-mentor"
+import { CreateMentoringInvite } from "../../src/domain/core/use-cases/Mentoring/Invite/create-metoring-invite"
+import { AcceptMentoringInvite } from "../../src/domain/core/use-cases/Mentoring/Invite/accept-mentoring-invite"
+import { MentoringInvite } from "../../src/domain/core/entities/mentoring-invite"
+import { Mentoring } from "../../src/domain/core/entities/metoring"
+import { CancelMentoringInvite } from "../../src/domain/core/use-cases/Mentoring/Invite/cancel-mentoring-invite"
+
+describe("Testes do caso de uso de cancelar um convite de Mentoria", () => {
+
+    const MentoringInviteRepository = new InMemoryMentoringInviteRepository()
+    const studentRepository = new InMemoryStudentRepository()
+    const mentorRepository = new InMemoryMentorRepository()
+    const cancelMentoringInvite = new CancelMentoringInvite(MentoringInviteRepository, studentRepository, mentorRepository)
+
+
+
+    test("Não deve ser possível cancelar um convite já aceito pelo o aluno", async () => {
+
+        const student = await studentRepository.findByEmail("thomas@example.com")
+        const mentor = await mentorRepository.findByEmail("digão@example.com")
+
+        if (student) {
+            const filter: Partial<MentoringInvite> = {
+                idStudent: student.id,
+                status: "ACCEPTED"
+            }
+
+            const mentoringInvite = await MentoringInviteRepository.findAcceptedInvite(filter)
+
+            console.log(mentoringInvite)
+            if (mentoringInvite) {
+
+                const params = {
+                    id: mentoringInvite.id,
+                    idStudent: mentoringInvite.idStudent,
+                    idMentor: mentoringInvite.idMentor
+                }
+
+                const canceled = await cancelMentoringInvite.execute(params)
+                console.log(canceled)
+                expect(canceled?.status).toBe("CANCELED")
+            }
+        }
+    })
+
+})

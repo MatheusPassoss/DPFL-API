@@ -3,8 +3,8 @@ export class MentoringInvite {
     public readonly id: string
     public readonly idMentor: string
     public readonly idStudent: string
-    private creatAt: Date | string
-    public updateAt: Date | string
+    public readonly creatAt: Date
+    public updateAt: Date
     public status: "PEDDING" | "ACCEPTED" | "REFUSED" | "CANCELED"
 
     private constructor(idMentor: string, idStudent: string, id:string, date?: Date) {

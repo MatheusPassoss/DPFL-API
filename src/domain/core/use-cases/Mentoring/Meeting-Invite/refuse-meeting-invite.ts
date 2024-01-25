@@ -1,5 +1,5 @@
 
-import { MentoringMeetingInvite } from "../../../entities/MentoringMeetingInvite"
+import { MentoringMeetingInvite } from "../../../entities/mentoring-meeting-invite"
 import { IMeetingInviteRepository } from "../../../repositories/Mentoring/Meeting-invite/IMentoring-meeting-invite-repository"
 import { IUseCase } from "../../../shared-global/IUse-case"
 import { EntityNotFound } from "../../../exceptions/entity-not-found"
@@ -45,7 +45,7 @@ export class RefuseMeetingInvite implements IUseCase<RefuseMeetingInviteParams, 
 
     }
 
-    private async validateParams(params: RefuseMeetingInviteParams) {
+    private async validateParams(params: RefuseMeetingInviteParams): Promise<Error[] | null> {
         const errors: Error[] = []
 
         const meetingInviteExists = await this.repository.findById(params.idMeetingInvite)

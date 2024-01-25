@@ -1,7 +1,7 @@
 import { Mentoring } from "../../entities/metoring";
 import { EntityNotUpdatedError } from "../../exceptions/entity-not-updated-error";
-import { IMentoringRepository } from "../../repositories/Mentoring/IMentoring-repositorie";
-import { IMentorRepository } from "../../repositories/User/IMentor-repositorie";
+import { IMentoringRepository } from "../../repositories/Mentoring/IMentoring-repository";
+import { IMentorRepository } from "../../repositories/User/IMentor-repository";
 import { IStudentRepository } from "../../repositories/User/IStudent-repository";
 import { IUseCase } from "../../shared-global/IUse-case";
 import { EntityNotFound } from "../../exceptions/entity-not-found";

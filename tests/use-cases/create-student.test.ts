@@ -18,7 +18,7 @@ describe("Caso de uso de criação de estudante", () => {
         email: "passos@passos",
         cpf: "12345678999",
         phone: "11 947249777",
-        bithDate: "10-11-2002",
+        birthDate: new Date(),
         address: {
             cep: "05856",
             city: "teste",
@@ -35,7 +35,7 @@ describe("Caso de uso de criação de estudante", () => {
         email: "passospassos",
         cpf: "123",
         phone: "11947249777",
-        bithDate: "10-11-2002",
+        birthDate: new Date(),
         address: {
             cep: "05856",
             city: "teste",
@@ -59,14 +59,13 @@ describe("Caso de uso de criação de estudante", () => {
     test("O método 'findByEmail' deve conseguir localizar o estudando que acabou de ser criado", async () => {
 
         const student = await StudentRepository.findByEmail("passos@passos")
-        // console.log(student?.email)
+
         expect(student).toBeTruthy
     })
 
     test("O método 'findById' deve conseguir localizar o estudante que acabou de ser criado", async () => {
 
         const student = await StudentRepository.findById(id)
-        // console.log(student?.id)
         expect(student).toBeTruthy
     })
 
@@ -77,6 +76,8 @@ describe("Caso de uso de criação de estudante", () => {
         expect(student).toEqual(studentSchema)
 
     })
+
+
 
     // test("Não deve ser possível prosseguir com o caso de uso, devido ao formato do CPF ser inválido", async () => {
 

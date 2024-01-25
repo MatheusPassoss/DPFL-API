@@ -3,7 +3,7 @@ export interface MentorData {
   email: string,
   cpf: string,
   phone: string,
-  bithDate: string | Date,
+  birthDate: Date,
   address: {
       cep: string,
       city: string,
@@ -21,7 +21,7 @@ export interface MentorData {
     email: string
     cpf: string
     phone: string
-    bithDate: string | Date
+    birthDate: Date
     address: {
         cep: string
         city: string
@@ -34,7 +34,7 @@ export interface MentorData {
       this.name = mentor.name;
       this.email = mentor.email;
       this.cpf = mentor.cpf;
-      this.bithDate = mentor.bithDate;
+      this.birthDate = mentor.birthDate;
       this.phone = mentor.phone;
       this.address = mentor.address;
     }

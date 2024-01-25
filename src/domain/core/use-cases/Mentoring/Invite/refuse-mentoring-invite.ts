@@ -1,4 +1,4 @@
-import { MentoringInvite } from "../../../entities/mentoringInvite";
+import { MentoringInvite } from "../../../entities/mentoring-invite";
 import { EntityNotFound } from "../../../exceptions/entity-not-found";
 import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository";
 import { InvalidParamError } from "../../../exceptions/invalid-param-error";
@@ -22,7 +22,7 @@ export class RefuseMentoringInvite implements IUseCase<RefuseMentoringInvitePara
     }
 
 
-    async execute(params: RefuseMentoringInviteParams) {
+    async execute(params: RefuseMentoringInviteParams): Promise<MentoringInvite> {
         const errors = await this.validateParams(params.idMentoringInvite)
 
         if (errors) {
@@ -49,7 +49,7 @@ export class RefuseMentoringInvite implements IUseCase<RefuseMentoringInvitePara
         return refused;
     }
 
-    private async validateParams(idMentoringInvite: string) {
+    private async validateParams(idMentoringInvite: string): Promise<Error[] | null> {
         const errors: Error[] = []
 
         const inviteExists = await this.MentoringInviteRepository.findById(idMentoringInvite)

@@ -1,42 +1,66 @@
 import { Student } from "../../src/domain/core/entities/Student";
+import { EntityNotFound } from "../../src/domain/core/exceptions/entity-not-found";
+import { InvalidDataError } from "../../src/domain/core/exceptions/invalid-data-error";
 import { IStudentRepository } from "../../src/domain/core/repositories/User/IStudent-repository";
 
 
 export class InMemoryStudentRepository implements IStudentRepository {
-    public students: Student[] = []
+    public students: Student[] = [
 
-    save(student: Student): Student {
+        {
+            id: "21ed35ad-2671-473f-9a0b-206771a0a786",
+            name: "Thomas",
+            email: "thomas@example.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                road: "Rua3",
+                number: "789",
+            }
+        }
+
+    ]
+
+    async save(student: Student): Promise<Student | null> {
+
+        if (!student) {
+            throw new InvalidDataError()
+        }
+
         this.students.push(student)
         return student
     }
 
 
-    update: (student: Partial<Student>) => Promise<Student>;
-
-
     async findById(id: string): Promise<Student | null> {
 
         const student = await this.students.find(student => student.id == id)
-        if (student) {
-            return student
+        if (!student) {
+            return null
         }
 
-        return null
+        return student
     }
 
     async findByEmail(email: string): Promise<Student | null> {
 
         const student = await this.students.find(student => student.email == email)
-        if (student) {
-            return student
+
+        if (!student) {
+            return null
         }
 
-        return null
+        return student
     }
-    
 
+
+    update: (student: Partial<Student>) => Promise<Student | null>;
     findByMentor: (emailMentor: string) => Promise<Student | null>;
-    listByModule: (module: string) => Promise<Student[] | null>;
+    listByModule: (module: string) => Promise<Student[] | null> ;
     listWithoutMentor: () => Promise<Student[] | null>;
 
 }
