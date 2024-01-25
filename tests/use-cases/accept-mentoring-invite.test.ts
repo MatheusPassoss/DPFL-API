@@ -280,7 +280,7 @@ describe("Criação de convite de Mentoria", () => {
         const InviteParams = {
             idMentor: idMentor,
             idStudent: idStudent,
-            createAt: date
+            createAt: new Date()
         }
 
         const Invite = await createMentoringInviteUseCase.execute(InviteParams)

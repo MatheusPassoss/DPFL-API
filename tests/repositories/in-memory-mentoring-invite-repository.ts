@@ -46,9 +46,9 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
         const accepted = await this.MentoringInvites.find(invite => invite.idStudent == filter.idStudent && invite.status == filter.status)
 
         if (!accepted) {
-            throw new EntityNotFound("Accepted Mentoring Invite")
+            return null
         }
-
+        console.log(accepted)
         return accepted
 
     }

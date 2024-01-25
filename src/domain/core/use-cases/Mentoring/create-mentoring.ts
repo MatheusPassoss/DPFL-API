@@ -12,7 +12,7 @@ import { IUseCase } from "../../shared-global/IUse-case"
 interface CreateMentoringParams {
     idStudent: string,
     idMentor: string,
-    date?: Date | string
+    date: Date 
 }
 
 export class CreateMentoring implements IUseCase<CreateMentoringParams, Mentoring> {
@@ -68,8 +68,8 @@ export class CreateMentoring implements IUseCase<CreateMentoringParams, Mentorin
     private async validateParams(params: CreateMentoringParams): Promise<Error[] | null>  {
         const errors: Error[] = [];
 
-        const mentorExits = await this.mentorRepository.findById(params.idStudent)
-        const studentExists = await this.studentRepository.findById(params.idMentor)
+        const mentorExits = await this.mentorRepository.findById(params.idMentor)
+        const studentExists = await this.studentRepository.findById(params.idStudent)
 
         if (!mentorExits) errors.push(new EntityNotFound("Mentor"));
 

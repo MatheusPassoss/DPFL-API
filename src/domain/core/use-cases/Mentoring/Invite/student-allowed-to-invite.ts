@@ -18,8 +18,9 @@ export class StudentAllowedToInvite implements IUseCase<StudentAllowedToInvitePa
     private readonly mentoringInviteRepository: IMentoringInviteRepository
     private readonly mentoringRepository: IMentoringRepository
 
-    constructor(studentRepository: IStudentRepository, mentoringRepository: IMentoringRepository) {
+    constructor(studentRepository: IStudentRepository, mentoringInviteRepository: IMentoringInviteRepository, mentoringRepository: IMentoringRepository) {
         this.studentRepository = studentRepository
+        this.mentoringInviteRepository = mentoringInviteRepository
         this.mentoringRepository = mentoringRepository
     }
 
@@ -42,7 +43,8 @@ export class StudentAllowedToInvite implements IUseCase<StudentAllowedToInvitePa
         }
 
 
-        const mentoringInviteAcceptedOrNull: MentoringInvite | null = await this.mentoringInviteRepository.findAcceptedInvite(filterMentoringInviteAccepted)
+        const mentoringInviteAcceptedOrNull: MentoringInvite | null = await this.mentoringInviteRepository.findAcceptedInvite(filterMentoringInviteAccepted)  
+        
         const mentoringInProgressOrNull: Mentoring | null = await this.mentoringRepository.findOne(filterMentoringInProgress);
 
         return mentoringInProgressOrNull === null && mentoringInviteAcceptedOrNull === null
