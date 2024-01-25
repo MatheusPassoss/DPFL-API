@@ -85,6 +85,10 @@ describe("Criação de convite de Mentoria", () => {
 
     })
 
+    test("O mentor deve conseguir enviar um novo convite caso o anterior seja cancelado, ou recusado", () => {
+
+    })
+
     // test("Deve retornar um erro caso o id do estudante seja inválido", async () => {
     //     const InviteParams = {
     //         idMentor: idMentor,

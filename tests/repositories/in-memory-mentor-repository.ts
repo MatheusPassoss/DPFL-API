@@ -21,6 +21,22 @@ export class InMemoryMentorRepository implements IMentorRepository {
                 road: "Rua3",
                 number: "789",
             }
+        },
+
+        {
+            id: "80052778-6118-123c-8e49-138e71643faf",
+            name: "Renato",
+            email: "renato@example.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                road: "Rua3",
+                number: "789",
+            }
         }
 
     ]

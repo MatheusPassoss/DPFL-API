@@ -1,4 +1,4 @@
-import { Student } from "../../src/domain/core/entities/Student";
+import { Student } from "../../src/domain/core/entities/student";
 import { EntityNotFound } from "../../src/domain/core/exceptions/entity-not-found";
 import { InvalidDataError } from "../../src/domain/core/exceptions/invalid-data-error";
 import { IStudentRepository } from "../../src/domain/core/repositories/User/IStudent-repository";
@@ -21,7 +21,24 @@ export class InMemoryStudentRepository implements IStudentRepository {
                 road: "Rua3",
                 number: "789",
             }
+        },
+
+        {
+            id: "30ed35ad-2671-473f-9a0b-206771a0a786",
+            name: "Vitoria",
+            email: "vitoria@example.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                road: "Rua3",
+                number: "789",
+            }
         }
+
 
     ]
 

@@ -16,9 +16,29 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
             status: "ACCEPTED",
             creatAt: new Date(),
             updateAt: new Date()
+        },
+
+        {
+            id: 'y4eff12e-fd4c-44b4-9f0a-f684cc42e953',
+            idStudent: '30ed35ad-2671-473f-9a0b-206771a0a786',
+            idMentor: '80052778-6118-123c-8e49-138e71643faf',
+            status: "PEDDING",
+            creatAt: new Date(),
+            updateAt: new Date()
         }
 
     ]
+
+
+    async findOneInvite(filter: Partial<MentoringInvite>): Promise<MentoringInvite | null> {
+        const MentoringInvite = await this.MentoringInvites.find(MentoringInvite => MentoringInvite.idStudent == filter.idStudent && MentoringInvite.idMentor == filter.idMentor && MentoringInvite.status == filter.status)
+       
+        if (!MentoringInvite) {
+            return null
+        }
+
+        return MentoringInvite
+    }
 
 
     async findById(id: string): Promise<MentoringInvite | null> {

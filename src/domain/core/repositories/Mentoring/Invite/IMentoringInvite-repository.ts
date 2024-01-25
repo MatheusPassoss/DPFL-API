@@ -15,10 +15,9 @@ export interface IMentoringInviteRepository extends IRepository<MentoringInvite>
     refuseAllPeddingInvites: (filterData: Partial<MentoringInvite>, updateData: Partial<MentoringInvite>) => void
     cancelInvite: (filterInvite: Partial<MentoringInvite>) => Promise<MentoringInvite | null>
     
-    
-    
-    
     findOne: (filter: Partial<MentoringInvite>) => Promise<MentoringInvite | null>
     findOneAndUpdate: (filter: Partial<MentoringInvite>, updatePartial: Partial<MentoringInvite>) => Promise<MentoringInvite | null>
+    
+    findOneInvite: (filter: Partial<MentoringInvite>) => Promise<MentoringInvite | null>
     findAcceptedInvite: (filter: Partial<MentoringInvite>) => Promise<MentoringInvite | null>
 }

@@ -17,23 +17,23 @@ describe("Testes do caso de uso de cancelar um convite de Mentoria", () => {
     const studentRepository = new InMemoryStudentRepository()
     const mentorRepository = new InMemoryMentorRepository()
     const cancelMentoringInvite = new CancelMentoringInvite(MentoringInviteRepository, studentRepository, mentorRepository)
-
-
-
-    test("Não deve ser possível cancelar um convite já aceito pelo o aluno", async () => {
-
-        const student = await studentRepository.findByEmail("thomas@example.com")
-        const mentor = await mentorRepository.findByEmail("digão@example.com")
-
+    
+    
+    test("Deve ser possível cancelar um convite pendente", async () => {
+        const student = await studentRepository.findByEmail("vitoria@example.com")
+        const mentor = await mentorRepository.findByEmail("renato@example.com")
+    
         if (student) {
             const filter: Partial<MentoringInvite> = {
+
                 idStudent: student.id,
-                status: "ACCEPTED"
+                idMentor: mentor.id,
+                status: "PEDDING"
             }
 
-            const mentoringInvite = await MentoringInviteRepository.findAcceptedInvite(filter)
+            const mentoringInvite = await MentoringInviteRepository.findOneInvite(filter)
+            
 
-            console.log(mentoringInvite)
             if (mentoringInvite) {
 
                 const params = {
@@ -44,9 +44,39 @@ describe("Testes do caso de uso de cancelar um convite de Mentoria", () => {
 
                 const canceled = await cancelMentoringInvite.execute(params)
                 console.log(canceled)
-                expect(canceled?.status).toBe("CANCELED")
+                expect(canceled.status).toBe("CANCELED")
+            }
+            
+            expect(mentoringInvite).toBeTruthy()
+    
+    }})
+
+
+    
+    test("Não deve ser possível cancelar um convite já aceito pelo o aluno", async () => {
+        
+        const student = await studentRepository.findByEmail("thomas@example.com")
+
+        if (student) {
+            const filter: Partial<MentoringInvite> = {
+                idStudent: student.id,
+                status: "ACCEPTED"
+            }
+
+            const mentoringInvite = await MentoringInviteRepository.findAcceptedInvite(filter)
+            if (mentoringInvite) {
+
+                const params = {
+                    id: mentoringInvite.id,
+                    idStudent: mentoringInvite.idStudent,
+                    idMentor: mentoringInvite.idMentor
+                }
+
+                expect(async () => await cancelMentoringInvite.execute(params)).toThrow()
+               
             }
         }
     })
+
 
 })
