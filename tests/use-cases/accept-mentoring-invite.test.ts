@@ -8,6 +8,7 @@ import { CreateMentorUseCase } from "../../src/domain/core/use-cases/User/create
 import { CreateMentoringInvite } from "../../src/domain/core/use-cases/Mentoring/Invite/create-metoring-invite"
 import { AcceptMentoringInvite } from "../../src/domain/core/use-cases/Mentoring/Invite/accept-mentoring-invite"
 import { MentoringInvite } from "../../src/domain/core/entities/mentoring-invite"
+import { InvalidParamError } from "../../src/domain/core/exceptions/invalid-param-error"
 
 describe("Criação de convite de Mentoria", () => {
 
@@ -45,7 +46,7 @@ describe("Criação de convite de Mentoria", () => {
             email: "passos@passos",
             cpf: "12345678999",
             phone: "11 947249777",
-            birthDate: new Date(),         
+            birthDate: new Date(),
             address: {
                 cep: "05856",
                 city: "teste",
@@ -426,24 +427,25 @@ describe("Criação de convite de Mentoria", () => {
     })
 
 
-    // test("Não deve ser possível aceitar mais de um convite de Mentoria", async () => {
-    //     const mentoring = await MentoringInvite.findByMentorId(idThirdMentor)
+    test("Não deve ser possível aceitar mais de um convite de Mentoria", async () => {
+        const mentoring = await MentoringInvite.findByMentorId(idThirdMentor);
 
-    //     if (mentoring) {
-    //         const params = {
-    //             idMentoringInvite: mentoring.id,
-    //             idStudent: idSecondStudent,
-    //             idMentor: idThirdMentor,
-    //         }
+        if (!mentoring) {
+            return null
+        }
+        const params = {
+            idMentoringInvite: mentoring.id,
+            idStudent: idSecondStudent,
+            idMentor: idThirdMentor,
+        };
 
-    //         const accepted = await acceptInvite.execute(params)
+        const teste = await acceptInvite.execute(params)
 
-    //         if (accepted) console.log(accepted)
+        // expect(teste).toBeTruthy()
+        // console.log(teste)
+        expect(async () => await acceptInvite.execute(params)).rejects.toThrow(InvalidParamError);
 
-    //         expect(mentoring).toBeTruthy()
-
-    //     }
-    // })
+    });
 
     // test("Não deve ser possível enviar um convite de Mentoria se um já foi enviado.", async () => {
 
@@ -453,7 +455,7 @@ describe("Criação de convite de Mentoria", () => {
     //         createAt: date
     //     }
 
-    //     expect(() => createMentoringInviteUseCase.execute(ExistingInvite)).toThrow(InvalidParamError)
+    //     expect(() => createMentoringInviteUseCase.execute(ExistingInvite)).rejects.toThrow(InvalidParamError)
 
     // })
 

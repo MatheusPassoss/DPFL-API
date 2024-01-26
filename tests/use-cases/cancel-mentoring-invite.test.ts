@@ -72,7 +72,7 @@ describe("Testes do caso de uso de cancelar um convite de Mentoria", () => {
                     idMentor: mentoringInvite.idMentor
                 }
 
-                expect(async () => await cancelMentoringInvite.execute(params)).toThrow()
+                expect(async () => await cancelMentoringInvite.execute(params)).rejects.toThrow()
                
             }
         }

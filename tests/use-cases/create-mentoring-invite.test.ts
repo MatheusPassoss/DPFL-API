@@ -89,38 +89,39 @@ describe("Criação de convite de Mentoria", () => {
 
     })
 
-    // test("Deve retornar um erro caso o id do estudante seja inválido", async () => {
-    //     const InviteParams = {
-    //         idMentor: idMentor,
-    //         idStudent: "123",
-    //         createAt: date
-    //     }
+    test("Deve retornar um erro caso o id do estudante seja inválido", async () => {
+        const InviteParams = {
+            idMentor: idMentor,
+            idStudent: "123",
+            createAt: date
+        }
 
-    //     expect(async () => await createMentoringInviteUseCase.execute(InviteParams)).toThrow()
-    // })
-
-
-    // test("Deve retornar um erro caso o id do Mentor seja inválido", async () => {
-    //     const InviteParams = {
-    //         idMentor: "123",
-    //         idStudent: idStudent,
-    //         createAt: date
-    //     }
-
-    //     expect(async () => await createMentoringInviteUseCase.execute(InviteParams)).toThrow()
-    // })
-
-    // test("Deve retornar um erro caso o id do Mentor e do aluno estejam invertidos", async () => {
-    //     const InviteParams = {
-    //         idMentor: idStudent,
-    //         idStudent: idMentor,
-    //         createAt: date
-    //     }
-
-    //     expect(async () => await createMentoringInviteUseCase.execute(InviteParams)).toThrow()
-    // })
+        expect(async () => await createMentoringInviteUseCase.execute(InviteParams)).rejects.toThrow()
+    })
 
 
+    test("Deve retornar um erro caso o id do Mentor seja inválido", async () => {
+        const InviteParams = {
+            idMentor: "123",
+            idStudent: idStudent,
+            createAt: date
+        }
+
+        expect(async () => await createMentoringInviteUseCase.execute(InviteParams)).rejects.toThrow()
+    })
+
+    test("Deve retornar um erro caso o id do Mentor e do aluno estejam invertidos", async () => {
+        const InviteParams = {
+            idMentor: idStudent,
+            idStudent: idMentor,
+            createAt: date
+        }
+
+        expect(async () => await createMentoringInviteUseCase.execute(InviteParams)).rejects.toThrow()
+    })
 
 
+    test("Um mentor deve conseguir enviar um novo convite de Mentoria para o mesmo aluno, caso o anterior tenha sido cancelado ou recusado")
+
+    test("Um mentor deve conseguir enviar um novo convite de Mentoria para um aluno diferente, caso o anterior tenha sido cancelado ou recusado")
 })
