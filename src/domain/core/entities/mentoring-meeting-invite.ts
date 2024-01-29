@@ -10,7 +10,7 @@ export class MentoringMeetingInvite implements IEntity {
     public readonly idMentor: string
     public date: Date
 
-    public status: "PEDDING" | "REFUSED" | "CANCELED" | "ACEPPTED"
+    public status: "PEDDING" | "REFUSED" | "CANCELED" | "ACCEPTED"
 
     constructor(id: string, idStudent: string, idMentor: string, date: Date) {
 

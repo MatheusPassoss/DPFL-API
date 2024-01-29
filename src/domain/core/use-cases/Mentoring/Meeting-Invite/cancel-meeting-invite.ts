@@ -33,7 +33,7 @@ export class CanceMeetingInvite implements IUseCase<CanceMeetingInviteParams, Me
 
         const updateMeetingInvite: Partial<MentoringMeetingInvite> = {
             status: "CANCELED", 
-            updateAt: new Date().toLocaleDateString()
+            updateAt: new Date()
         }
 
         const canceledInvite = await this.repository.findOneAndUpdate(filterMeetingInvite, updateMeetingInvite)

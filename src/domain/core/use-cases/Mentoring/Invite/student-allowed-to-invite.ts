@@ -26,7 +26,7 @@ export class StudentAllowedToInvite implements IUseCase<StudentAllowedToInvitePa
 
     async execute(params: StudentAllowedToInviteParams): Promise<boolean> {
 
-        const errors = await this.validateParams(params.idStudent);
+        const errors = await this.validateParams(params);
 
         if (errors) {
             throw new InvalidParamError(errors);
@@ -43,17 +43,18 @@ export class StudentAllowedToInvite implements IUseCase<StudentAllowedToInvitePa
         }
 
 
+
+
         const mentoringInviteAcceptedOrNull: MentoringInvite | null = await this.mentoringInviteRepository.findAcceptedInvite(filterMentoringInviteAccepted)  
-        
+
         const mentoringInProgressOrNull: Mentoring | null = await this.mentoringRepository.findOne(filterMentoringInProgress);
 
         return mentoringInProgressOrNull === null && mentoringInviteAcceptedOrNull === null
     }
 
-    private async validateParams(idStudent: string): Promise<Error[] | null> {
+    private async validateParams(params: StudentAllowedToInviteParams): Promise<Error[] | null> {
         const errors: Error[] = []
-
-        const studentExists = await this.studentRepository.findById(idStudent)
+        const studentExists = await this.studentRepository.findById(params.idStudent)
 
         if (!studentExists) {
             errors.push(new EntityNotFound("Student"))
@@ -62,3 +63,5 @@ export class StudentAllowedToInvite implements IUseCase<StudentAllowedToInvitePa
         return errors.length > 0 ? errors : null;
     }
 }
+
+

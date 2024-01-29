@@ -85,10 +85,6 @@ describe("Criação de convite de Mentoria", () => {
 
     })
 
-    test("O mentor deve conseguir enviar um novo convite caso o anterior seja cancelado, ou recusado", () => {
-
-    })
-
     test("Deve retornar um erro caso o id do estudante seja inválido", async () => {
         const InviteParams = {
             idMentor: idMentor,
@@ -121,7 +117,41 @@ describe("Criação de convite de Mentoria", () => {
     })
 
 
-    test("Um mentor deve conseguir enviar um novo convite de Mentoria para o mesmo aluno, caso o anterior tenha sido cancelado ou recusado")
+    test("Um mentor deve conseguir enviar um novo convite de Mentoria para o mesmo aluno, caso o anterior tenha sido cancelado ou recusado", async () => {
 
-    test("Um mentor deve conseguir enviar um novo convite de Mentoria para um aluno diferente, caso o anterior tenha sido cancelado ou recusado")
+        const InviteParams = {
+            idMentor:  "85952000-6118-123c-8e49-138e71643faf",
+            idStudent: "66ed35ad-2671-473f-9z0b-206771a0a786",
+            createAt: date
+        }
+
+        const invite = await createMentoringInviteUseCase.execute(InviteParams)
+
+        expect(invite).toBeTruthy()
+        expect(invite.status).toBe("PEDDING")
+        expect(invite.idStudent).toBe("66ed35ad-2671-473f-9z0b-206771a0a786")
+        expect(invite.idMentor).toBe("85952000-6118-123c-8e49-138e71643faf")
+
+    })
+
+
+
+    test("Um mentor deve conseguir enviar um novo convite de Mentoria para um aluno diferente, caso o anterior tenha sido cancelado ou recusado", async () => {
+
+        const InviteParams = {
+            idMentor:  "70152000-6118-123c-8e49-138e71643fa",
+            idStudent: "70ed35ad-2671-473f-9z0b-306771a0a786",
+            createAt: date
+        }
+
+        const invite = await createMentoringInviteUseCase.execute(InviteParams)
+
+        expect(invite).toBeTruthy()
+        expect(invite.status).toBe("PEDDING")
+        expect(invite.idStudent).toBe("70ed35ad-2671-473f-9z0b-306771a0a786")
+        expect(invite.idMentor).toBe("70152000-6118-123c-8e49-138e71643fa")
+
+    })
+
+
 })

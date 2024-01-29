@@ -14,7 +14,7 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
             idStudent: '21ed35ad-2671-473f-9a0b-206771a0a786',
             idMentor: '89852778-6118-428c-8e49-138e71643faf',
             status: "ACCEPTED",
-            creatAt: new Date(),
+            createAt: new Date(),
             updateAt: new Date()
         },
 
@@ -23,16 +23,70 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
             idStudent: '30ed35ad-2671-473f-9a0b-206771a0a786',
             idMentor: '80052778-6118-123c-8e49-138e71643faf',
             status: "PEDDING",
-            creatAt: new Date(),
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+  
+        {
+            id: 'wwwwwwe-fd4c-44b4-9f0a-f684cc42e953',
+            idStudent: '66ed35ad-2671-473f-9z0b-206771a0a786',
+            idMentor: '85952000-6118-123c-8e49-138e71643faf',
+            status: "CANCELED",
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+
+        {
+            id: 'x4ezzzze-fd4c-44b4-9f0a-f684cc42e953',
+            idStudent: '66ed35ad-2671-473f-9z0b-206771a0a786',
+            idMentor: '85952000-6118-123c-8e49-138e71643faf',
+            status: "REFUSED",
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+
+        {
+            id: 'yyyyyzz-fd4c-44b4-9f0a-f684cc42e953',
+            idStudent: '66ed35ad-2671-473f-9z0b-206771a0a786',
+            idMentor: '70152000-6118-123c-8e49-138e71643fa',
+            status: "CANCELED",
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+
+        {
+            id: 'aaaaabb-fd4c-44b4-9f0a-f684cc42e953',
+            idStudent: '66ed35ad-2671-473f-9z0b-206771a0a786',
+            idMentor: '70152000-6118-123c-8e49-138e71643fa',
+            status: "REFUSED",
+            createAt: new Date(),
             updateAt: new Date()
         }
 
+
     ]
+
+    async listByStatusAndMentorId(filter: Partial<MentoringInvite>): Promise<MentoringInvite[] | null> {
+       
+        if (!filter.idMentor || !filter.status) {
+            throw new InvalidDataError()
+        }
+
+        const invites: MentoringInvite[] = []
+
+        this.MentoringInvites.forEach(invite => {
+            if (invite.idMentor == filter.idMentor && invite.status == filter.status) {
+                invites.push(invite)
+            }
+        })
+
+        return invites
+    }
 
 
     async findOneInvite(filter: Partial<MentoringInvite>): Promise<MentoringInvite | null> {
         const MentoringInvite = await this.MentoringInvites.find(MentoringInvite => MentoringInvite.idStudent == filter.idStudent && MentoringInvite.idMentor == filter.idMentor && MentoringInvite.status == filter.status)
-       
+
         if (!MentoringInvite) {
             return null
         }
@@ -53,7 +107,7 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
 
     async findOne(filter: Partial<MentoringInvite>): Promise<MentoringInvite | null> {
         const filtred = await this.MentoringInvites.find(MentoringInvite => MentoringInvite.id == filter.id && MentoringInvite.idMentor == filter.idMentor && MentoringInvite.idStudent == filter.idStudent)
-        
+
         if (!filtred) {
             return null
         }
@@ -68,7 +122,7 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
         if (!accepted) {
             return null
         }
-        console.log(accepted)
+
         return accepted
 
     }

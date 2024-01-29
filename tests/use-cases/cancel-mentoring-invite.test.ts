@@ -78,5 +78,30 @@ describe("Testes do caso de uso de cancelar um convite de Mentoria", () => {
         }
     })
 
+    test("Não deve ser possível cancelar um convite já cancelado", async () => {
+        
+        const student = await studentRepository.findByEmail("vitoria@example.com")
+
+        if (student) {
+            const filter: Partial<MentoringInvite> = {
+                idStudent: student.id,
+                status: "CANCELED"
+            }
+
+            const mentoringInvite = await MentoringInviteRepository.findAcceptedInvite(filter)
+            if (mentoringInvite) {
+
+                const params = {
+                    id: mentoringInvite.id,
+                    idStudent: mentoringInvite.idStudent,
+                    idMentor: mentoringInvite.idMentor
+                }
+
+                expect(async () => await cancelMentoringInvite.execute(params)).rejects.toThrow()
+               
+            }
+        }
+    })
+
 
 })

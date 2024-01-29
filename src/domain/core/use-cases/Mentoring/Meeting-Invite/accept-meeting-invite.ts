@@ -5,56 +5,75 @@ import { IUseCase } from "../../../shared-global/IUse-case"
 import { EntityNotFound } from "../../../exceptions/entity-not-found"
 import { InvalidParamError } from "../../../exceptions/invalid-param-error"
 import { EntityNotUpdatedError } from "../../../exceptions/entity-not-updated-error"
+import { InvitationAlreadyAccepted } from "../../../exceptions/invitation-already-accepted-error"
 
 interface AcceptMeetingInviteParams {
-    idMeetingInvite: string,
+    idMentoringMeetingInvite: string
+    idStudent: string
+    idMentor: string
+
 }
 
-export class AcceptMeetingInvite implements IUseCase<AcceptMeetingInviteParams, MentoringMeetingInvite> {
+export class AcceptMentoringMeetingInvite implements IUseCase<AcceptMeetingInviteParams, MentoringMeetingInvite> {
 
-    private readonly repository: IMeetingInviteRepository
+    private readonly MeetingInviteRepository: IMeetingInviteRepository
 
-    constructor(repository: IMeetingInviteRepository) {
-        this.repository = repository
+    constructor(InviteRepository: IMeetingInviteRepository) {
+        this.MeetingInviteRepository = InviteRepository
     }
 
     async execute(params: AcceptMeetingInviteParams): Promise<MentoringMeetingInvite> {
-
         const errors = await this.validateParams(params)
 
         if (errors) {
-            throw new InvalidParamError(errors)
+            throw new InvalidParamError(errors);
         }
 
-        const filterMeetingInvite: Partial<MentoringMeetingInvite> = {
-            id: params.idMeetingInvite,
+        const filterInvite: Partial<MentoringMeetingInvite> = {
+            id: params.idMentoringMeetingInvite,
+            idStudent: params.idStudent,
+            idMentor: params.idMentor,
             status: "PEDDING"
         }
 
-        const updateMeetingInvite: Partial<MentoringMeetingInvite> = {
-            status: "ACEPPTED", 
+        const updateInvite: Partial<MentoringMeetingInvite> = {
+            status: "ACCEPTED",
             updateAt: new Date()
         }
 
-        const acceptInvite = await this.repository.findOneAndUpdate(filterMeetingInvite, updateMeetingInvite)
-        if (!acceptInvite) {
+        const update = await this.MeetingInviteRepository.acceptInvite(filterInvite, updateInvite);
+
+        if (!update) {
             throw new EntityNotUpdatedError()
-        }
+        } 
 
-        return acceptInvite
-
+        return update;
     }
 
+
+    
     private async validateParams(params: AcceptMeetingInviteParams): Promise<Error[] | null> {
         const errors: Error[] = []
 
-        const meetingInviteExists = await this.repository.findById(params.idMeetingInvite)
+        const inviteExists = await this.MeetingInviteRepository.findById(params.idMentoringMeetingInvite)
 
-        if (!meetingInviteExists) {
-            errors.push(new EntityNotFound("Mentoring Meeting Invite"))
+        const invitationAceptedFilter: Partial<MentoringMeetingInvite> = {
+            idStudent: params.idStudent,
+            status: "ACCEPTED"
         }
+
+        // const inviteAcepptedExits = await this.MeetingInviteRepository.findAcceptedInvite(invitationAceptedFilter)
+
+        if (!inviteExists) {
+            errors.push(new EntityNotFound("Mentoring Invite"))
+        }
+        
+        // if (inviteAcepptedExits) {
+        //     errors.push(new InvitationAlreadyAccepted())
+        // }
 
         return errors.length > 0 ? errors : null
 
     }
+
 }

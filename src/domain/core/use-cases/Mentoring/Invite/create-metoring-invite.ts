@@ -58,7 +58,7 @@ export class CreateMentoringInvite implements IUseCase<CreateMentoringInvitePara
 
         const studentExists = this.studentRepository.findById(params.idStudent)
         const mentorExists = this.mentorRepository.findById(params.idMentor)
-        const mentorAllowedToInvite = await new MentorAllowedToInvite(this.mentorRepository, this.repository, this.mentoringRepository).execute({mentorId: params.idMentor})
+        const mentorAllowedToInvite = await new MentorAllowedToInvite(this.mentorRepository, this.repository, this.mentoringRepository).execute({idMentor: params.idMentor})
         const studentAllowedToInvite = await new StudentAllowedToInvite(this.studentRepository, this.repository, this.mentoringRepository).execute({idStudent: params.idStudent})
 
 

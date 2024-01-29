@@ -20,7 +20,9 @@ export class InMemoryMentorRepository implements IMentorRepository {
                 state: "Estado3",
                 road: "Rua3",
                 number: "789",
-            }
+            },
+            createAt: new Date(),
+            updateAt: new Date()
         },
 
         {
@@ -36,14 +38,52 @@ export class InMemoryMentorRepository implements IMentorRepository {
                 state: "Estado3",
                 road: "Rua3",
                 number: "789",
-            }
+            },
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+
+        {
+            id: "85952000-6118-123c-8e49-138e71643faf",
+            name: "Sassine",
+            email: "sassine@example.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                road: "Rua3",
+                number: "789",
+            },
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+
+        {
+            id: "70152000-6118-123c-8e49-138e71643fa",
+            name: "Vilson",
+            email: "vilson@example.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                road: "Rua3",
+                number: "789",
+            },
+            createAt: new Date(),
+            updateAt: new Date()
         }
 
     ]
 
     async findById(id: string): Promise<Mentor | null> {
         const mentor = await this.mentors.find(mentor => mentor.id == id)
-
+     
         if (mentor) {
             return mentor
         }

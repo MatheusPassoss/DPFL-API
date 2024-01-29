@@ -1,3 +1,5 @@
+import { IEntity } from "../shared-global/IEntity"
+
 export interface MentorData {
   name: string,
   email: string,
@@ -14,7 +16,7 @@ export interface MentorData {
 }
 }
   
-  export class Mentor implements MentorData {
+  export class Mentor implements IEntity {
   
     id: string
     name: string
@@ -29,6 +31,9 @@ export interface MentorData {
         road: string
         number: string
     }
+    createAt: Date;
+    updateAt: Date;
+
     private constructor(mentor: MentorData, id: string) {
       this.id = id
       this.name = mentor.name;
@@ -39,8 +44,9 @@ export interface MentorData {
       this.address = mentor.address;
     }
   
-    static create(mentor: MentorData, id: string): Mentor {
-      return new Mentor(mentor, id)
-    }
+   static create(params: MentorData, id: string): Mentor {
+     const mentor = new Mentor(params, id)
+     return mentor
+   }
   
   }

@@ -7,6 +7,9 @@ import { IStudentRepository } from "../../repositories/User/IStudent-repository"
 import { IMentorRepository } from "../../repositories/User/IMentor-repository"
 import { EntityNotFound } from "../../exceptions/entity-not-found"
 import { IUseCase } from "../../shared-global/IUse-case"
+import { MentoringAllowedToCreate } from "./mentoring-allowed-to-create"
+import { IMentoringInviteRepository } from "../../repositories/Mentoring/Invite/IMentoringInvite-repository"
+import { MentorNotAllowedToMentoring } from "../../exceptions/mentor-not-allowed-to-mentoring"
 
 
 interface CreateMentoringParams {
@@ -17,13 +20,15 @@ interface CreateMentoringParams {
 
 export class CreateMentoring implements IUseCase<CreateMentoringParams, Mentoring> {
     private readonly repository: IMentoringRepository;
+    private readonly inviteRepository: IMentoringInviteRepository
     private readonly studentRepository: IStudentRepository;
     private readonly mentorRepository: IMentorRepository;
 
-    constructor(repository: IMentoringRepository, studentRepository: IStudentRepository, mentorRepository: IMentorRepository) {
+    constructor(repository: IMentoringRepository, inviteRepository: IMentoringInviteRepository, studentRepository: IStudentRepository, mentorRepository: IMentorRepository) {
         this.repository = repository;
         this.studentRepository = studentRepository
         this.mentorRepository = mentorRepository
+        this.inviteRepository = inviteRepository
     }
 
     async execute(params: CreateMentoringParams): Promise<Mentoring> {
@@ -70,6 +75,11 @@ export class CreateMentoring implements IUseCase<CreateMentoringParams, Mentorin
 
         const mentorExits = await this.mentorRepository.findById(params.idMentor)
         const studentExists = await this.studentRepository.findById(params.idStudent)
+        const mentoringAllowedToInvite = await new MentoringAllowedToCreate(this.mentorRepository, this.studentRepository, this.inviteRepository, this.repository).execute({idMentor: params.idMentor, idStudent: params.idStudent})
+
+        if (!mentoringAllowedToInvite) {
+            errors.push(new MentorNotAllowedToMentoring())
+        }
 
         if (!mentorExits) errors.push(new EntityNotFound("Mentor"));
 

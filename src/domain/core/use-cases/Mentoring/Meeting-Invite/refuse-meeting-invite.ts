@@ -33,7 +33,7 @@ export class RefuseMeetingInvite implements IUseCase<RefuseMeetingInviteParams, 
 
         const updateMeetingInvite: Partial<MentoringMeetingInvite> = {
             status: "REFUSED", 
-            updateAt: new Date().toLocaleDateString()
+            updateAt: new Date()
         }
 
         const refusedInvite = await this.repository.findOneAndUpdate(filterMeetingInvite, updateMeetingInvite)

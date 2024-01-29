@@ -1,9 +1,21 @@
-export class MentoringInvite {
+import { IEntity } from "../shared-global/IEntity"
+
+
+interface MentoringInviteParams {
+    id: string,
+    idStudent: string,
+    idMentor: string,
+    createAt: Date
+    updateAt: Date
+}
+
+
+export class MentoringInvite implements MentoringInviteParams {
 
     public readonly id: string
     public readonly idMentor: string
     public readonly idStudent: string
-    public readonly creatAt: Date
+    public readonly createAt: Date
     public updateAt: Date
     public status: "PEDDING" | "ACCEPTED" | "REFUSED" | "CANCELED"
 
@@ -11,7 +23,7 @@ export class MentoringInvite {
         this.id = id
         this.idStudent = idStudent
         this.idMentor = idMentor
-        this.creatAt = date ? date : new Date()
+        this.createAt = date ? date : new Date()
         this.status = "PEDDING"
         this.updateAt = new Date()
     }

@@ -1,5 +1,4 @@
 import { Student } from "../../src/domain/core/entities/student";
-import { EntityNotFound } from "../../src/domain/core/exceptions/entity-not-found";
 import { InvalidDataError } from "../../src/domain/core/exceptions/invalid-data-error";
 import { IStudentRepository } from "../../src/domain/core/repositories/User/IStudent-repository";
 
@@ -37,7 +36,41 @@ export class InMemoryStudentRepository implements IStudentRepository {
                 road: "Rua3",
                 number: "789",
             }
+        },
+
+        {
+            id: "66ed35ad-2671-473f-9z0b-206771a0a786",
+            name: "Vinis",
+            email: "vini@example.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                road: "Rua3",
+                number: "789",
+            }
+        },
+
+        {
+            id: "70ed35ad-2671-473f-9z0b-306771a0a786",
+            name: "Marcos",
+            email: "marcos@example.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                road: "Rua3",
+                number: "789",
+            }
         }
+
+        
 
 
     ]
@@ -56,6 +89,7 @@ export class InMemoryStudentRepository implements IStudentRepository {
     async findById(id: string): Promise<Student | null> {
 
         const student = await this.students.find(student => student.id == id)
+     
         if (!student) {
             return null
         }

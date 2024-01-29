@@ -77,12 +77,10 @@ describe("Caso de uso de criação de estudante", () => {
 
     })
 
+    test("Não deve ser possível prosseguir com o caso de uso, devido ao formato do CPF ser inválido", async () => {
 
-
-    // test("Não deve ser possível prosseguir com o caso de uso, devido ao formato do CPF ser inválido", async () => {
-
-    //     expect(() => createStudentUseCase.execute({ ...InvalidStudentSchema })).toThrow(InvalidParamError)
-    // });
+        expect(async () => await createStudentUseCase.execute({ ...InvalidStudentSchema })).rejects.toThrow(InvalidParamError)
+    });
 
 
 })

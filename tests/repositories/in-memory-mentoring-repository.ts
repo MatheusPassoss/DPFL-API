@@ -38,7 +38,7 @@ export class InMemoryMentoringRepository implements IMentoringRepository {
     }
 
     async findOne(filter: Partial<Mentoring>): Promise<Mentoring | null> {
-        const filtred = await this.mentorings.find(mentoring => mentoring.id == filter.id && mentoring.idMentor == filter.idMentor && mentoring.idStudent == filter.idStudent)
+        const filtred = await this.mentorings.find(mentoring => mentoring.idMentor == filter.idMentor && mentoring.idStudent == filter.idStudent && mentoring.status == filter.status)
 
         if (!filtred) {
             return null

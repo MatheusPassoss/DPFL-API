@@ -50,13 +50,13 @@ export class CompleteMentoring implements IUseCase<CompleteMentoringParams, Ment
             updateAt: new Date(),
         }
 
-        const completed = this.repository.findOneAndUpdate(filter, update)
+        const completed = await this.repository.findOneAndUpdate(filter, update)
 
         if (!completed) {
             throw new EntityNotUpdatedError();
         }
 
-        return  completed
+        return completed
 
     }
 

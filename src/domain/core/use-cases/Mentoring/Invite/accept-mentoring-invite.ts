@@ -44,8 +44,7 @@ export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInvitePara
         if (!update) {
             throw new EntityNotUpdatedError()
         } else {
-
-            console.log(update)
+ 
 
             let filterAllInvites: Partial<MentoringInvite> = {
                 idStudent: params.idStudent,

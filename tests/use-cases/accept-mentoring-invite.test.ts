@@ -439,25 +439,28 @@ describe("Criação de convite de Mentoria", () => {
             idMentor: idThirdMentor,
         };
 
-        const teste = await acceptInvite.execute(params)
-
-        // expect(teste).toBeTruthy()
-        // console.log(teste)
         expect(async () => await acceptInvite.execute(params)).rejects.toThrow(InvalidParamError);
 
     });
 
-    // test("Não deve ser possível enviar um convite de Mentoria se um já foi enviado.", async () => {
+    test("Não deve ser possível enviar um convite de Mentoria se já há um convite pendente por parte do Mentor, ou aceito.", async () => {
 
-    //     const ExistingInvite = {
-    //         idMentor: idSeventhMentor,
-    //         idStudent: idThirdStudent,
-    //         createAt: date
-    //     }
+        const secondMentorNotAllowed = {
+            idMentor: idSecondMentor,
+            idStudent: idThirdStudent,
+            createAt: date
+        }
 
-    //     expect(() => createMentoringInviteUseCase.execute(ExistingInvite)).rejects.toThrow(InvalidParamError)
+        const secondStudentNotAllowed = {
+            idMentor: idSeventhMentor,
+            idStudent: idSecondStudent,
+            createAt: date
+        }
+        
+        expect( async () => await createMentoringInviteUseCase.execute(secondMentorNotAllowed)).rejects.toThrow(InvalidParamError)
+        expect( async () => await createMentoringInviteUseCase.execute(secondStudentNotAllowed)).rejects.toThrow(InvalidParamError)
 
-    // })
+    })
 
 }
 )

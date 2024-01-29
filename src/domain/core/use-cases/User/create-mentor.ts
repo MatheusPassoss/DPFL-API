@@ -15,7 +15,7 @@ interface CreateMentorParams {
     email: string
     cpf: string
     phone: string
-    birthDate: Date | string
+    birthDate: Date
     address: {
         cep: string,
         city: string,

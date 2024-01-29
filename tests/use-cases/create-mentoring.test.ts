@@ -20,9 +20,9 @@ describe("Deve ser possível criar uma Mentoria", () => {
     const createMentorUseCase = new CreateMentorUseCase(MentorRepository)
     const createMentoring = new CreateMentoringInvite(MentoringInvite, StudentRepository, MentorRepository, MentoringRepository)
     const acceptInvite = new AcceptMentoringInvite(MentoringInvite)
-    const createRealMentoring = new CreateMentoring(MentoringRepository, StudentRepository, MentorRepository,)
+    const createRealMentoring = new CreateMentoring(MentoringRepository, MentoringInvite, StudentRepository, MentorRepository,)
 
-    const date = new Date() 
+    const date = new Date()
 
 
     const idStudent = crypto.randomUUID()
@@ -85,7 +85,7 @@ describe("Deve ser possível criar uma Mentoria", () => {
         }
 
         const Invite = await createMentoring.execute(InviteParams)
-        
+
         expect(Invite.idStudent).toBe(idStudent)
         expect(Invite.idMentor).toBe(idMentor)
 
@@ -116,10 +116,10 @@ describe("Deve ser possível criar uma Mentoria", () => {
             date: date
         }
 
-       const Mentoring = await createRealMentoring.execute(CreateMentoringParams)
+        const Mentoring = await createRealMentoring.execute(CreateMentoringParams)
 
-       expect(Mentoring?.idMentor).toBe(idMentor)
-       expect(Mentoring?.idStudent).toBe(idStudent)
+        expect(Mentoring?.idMentor).toBe(idMentor)
+        expect(Mentoring?.idStudent).toBe(idStudent)
 
     })
 
