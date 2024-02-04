@@ -13,7 +13,7 @@ interface RefuseMentoringInviteParams {
     idStudent: string
 }
 
-export class RefuseMentoringInvite implements IUseCase<RefuseMentoringInviteParams, MentoringInvite>{
+export class RefuseMentoringInvite implements IUseCase<RefuseMentoringInviteParams, MentoringInvite> {
 
     private readonly MentoringInviteRepository: IMentoringInviteRepository
 
@@ -30,7 +30,7 @@ export class RefuseMentoringInvite implements IUseCase<RefuseMentoringInvitePara
         }
 
         const filterInvite: Partial<MentoringInvite> = {
-            id: params.idMentoringInvite,
+            idMentor: params.idMentor,
             idStudent: params.idStudent,
             status: "PEDDING"
         }
@@ -41,7 +41,7 @@ export class RefuseMentoringInvite implements IUseCase<RefuseMentoringInvitePara
         }
 
         const refused = await this.MentoringInviteRepository.findOneAndUpdate(filterInvite, updateInvite);
-        
+
         if (!refused) {
             throw new EntityNotUpdatedError()
         }

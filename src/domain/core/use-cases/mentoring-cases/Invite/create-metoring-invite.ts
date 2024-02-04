@@ -1,5 +1,5 @@
 import { MentoringInvite } from "../../../entities/mentoring-invite";
-import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository"
+import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository";
 import { InvalidParamError } from "../../../exceptions/invalid-param-error";
 import { IStudentRepository } from "../../../repositories/User/IStudent-repository";
 import { IMentorRepository } from "../../../repositories/User/IMentor-repository";

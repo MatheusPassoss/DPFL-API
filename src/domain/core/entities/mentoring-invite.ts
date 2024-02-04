@@ -1,5 +1,6 @@
 import { IEntity } from "../shared-global/IEntity"
 
+// token
 
 interface MentoringInviteParams {
     id: string,

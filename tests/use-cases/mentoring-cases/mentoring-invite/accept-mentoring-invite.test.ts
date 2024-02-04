@@ -1,14 +1,14 @@
-import { InMemoryMentorRepository } from "../repositories/in-memory-mentor-repository"
-import { InMemoryMentoringRepository } from "../repositories/in-memory-mentoring-repository"
-import { InMemoryStudentRepository } from "../repositories/in-memory-students-repository"
-import { CreateStudentUseCase } from "../../src/domain/core/use-cases/User/create-student"
-import { InMemoryMentoringInviteRepository } from "../repositories/in-memory-mentoring-invite-repository"
-import { crypto } from "../../src"
-import { CreateMentorUseCase } from "../../src/domain/core/use-cases/User/create-mentor"
-import { CreateMentoringInvite } from "../../src/domain/core/use-cases/Mentoring/Invite/create-metoring-invite"
-import { AcceptMentoringInvite } from "../../src/domain/core/use-cases/Mentoring/Invite/accept-mentoring-invite"
-import { MentoringInvite } from "../../src/domain/core/entities/mentoring-invite"
-import { InvalidParamError } from "../../src/domain/core/exceptions/invalid-param-error"
+import { InMemoryMentorRepository } from "../../../repositories/in-memory-mentor-repository"
+import { InMemoryMentoringRepository } from "../../../repositories/in-memory-mentoring-repository"
+import { InMemoryStudentRepository } from "../../../repositories/in-memory-students-repository"
+import { CreateStudentUseCase } from "../../../../src/domain/core/use-cases/User/create-student"
+import { InMemoryMentoringInviteRepository } from "../../../repositories/in-memory-mentoring-invite-repository"
+import { crypto } from "../../../../src"
+import { CreateMentorUseCase } from "../../../../src/domain/core/use-cases/User/create-mentor"
+import { CreateMentoringInvite } from "../../../../src/domain/core/use-cases/mentoring-cases/Invite/create-metoring-invite"
+import { AcceptMentoringInvite } from "../../../../src/domain/core/use-cases/mentoring-cases/Invite/accept-mentoring-invite"
+import { MentoringInvite } from "../../../../src/domain/core/entities/mentoring-invite"
+import { InvalidParamError } from "../../../../src/domain/core/exceptions/invalid-param-error"
 
 describe("Criação de convite de Mentoria", () => {
 
@@ -21,7 +21,6 @@ describe("Criação de convite de Mentoria", () => {
     const createMentorUseCase = new CreateMentorUseCase(MentorRepository)
     const createMentoringInviteUseCase = new CreateMentoringInvite(MentoringInvite, StudentRepository, MentorRepository, MentoringRepository)
     const acceptInvite = new AcceptMentoringInvite(MentoringInvite)
-
 
     const date = new Date()
     const idStudent = crypto.randomUUID()

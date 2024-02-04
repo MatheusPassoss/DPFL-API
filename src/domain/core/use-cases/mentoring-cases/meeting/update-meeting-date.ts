@@ -43,7 +43,7 @@ export class UpdateMentoringMeeting implements IUseCase<UpdateMentoringMeetingPa
 
         const updateMeeting: Partial<MentoringMeeting> = {
             date: params.date,
-            status: "PEDDING",
+            status: "NOT-CONFIRMED",
             updateAt: new Date()
         }
 

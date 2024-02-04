@@ -1,11 +1,12 @@
-import { InMemoryMentorRepository } from "../repositories/in-memory-mentor-repository"
-import { InMemoryMentoringRepository } from "../repositories/in-memory-mentoring-repository"
-import { InMemoryStudentRepository } from "../repositories/in-memory-students-repository"
-import { CreateStudentUseCase } from "../../src/domain/core/use-cases/User/create-student"
-import { InMemoryMentoringInviteRepository } from "../repositories/in-memory-mentoring-invite-repository"
-import { crypto } from "../../src"
-import { CreateMentorUseCase } from "../../src/domain/core/use-cases/User/create-mentor"
-import { CreateMentoringInvite } from "../../src/domain/core/use-cases/Mentoring/Invite/create-metoring-invite"
+import { InMemoryMentorRepository } from "../../../repositories/in-memory-mentor-repository"
+import { InMemoryMentoringRepository } from "../../../repositories/in-memory-mentoring-repository"
+import { InMemoryStudentRepository } from "../../../repositories/in-memory-students-repository"
+import { CreateStudentUseCase } from "../../../../src/domain/core/use-cases/User/create-student"
+import { InMemoryMentoringInviteRepository } from "../../../repositories/in-memory-mentoring-invite-repository"
+import { crypto } from "../../../../src"
+import { CreateMentorUseCase } from "../../../../src/domain/core/use-cases/User/create-mentor"
+import { CreateMentoringInvite } from "../../../../src/domain/core/use-cases/mentoring-cases/Invite/create-metoring-invite"
+import { SendEmailNotificationService } from "../../../../src/application/services/email-service/send-email-notification"
 
 describe("Criação de convite de Mentoria", () => {
 
@@ -22,6 +23,23 @@ describe("Criação de convite de Mentoria", () => {
     const idStudent = crypto.randomUUID()
     const idMentor = crypto.randomUUID()
 
+    const mailService = new SendEmailNotificationService()
+
+    const studentSchema = {
+        id: idStudent,
+        name: "Passos",
+        email: "passos@passos",
+        cpf: "12345678999",
+        phone: "11 947249777",
+        birthDate: new Date(),
+        address: {
+            cep: "05856",
+            city: "teste",
+            state: "teste",
+            road: "teste",
+            number: "teste",
+        }
+    }
 
     test("Deve ser possível criar um estudante", async () => {
 
@@ -152,6 +170,9 @@ describe("Criação de convite de Mentoria", () => {
         expect(invite.idMentor).toBe("70152000-6118-123c-8e49-138e71643fa")
 
     })
-
+    
+    test("Deve ser possível enviar um e-mail", () => {
+        mailService.execute(studentSchema)
+    })
 
 })

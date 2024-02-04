@@ -1,4 +1,4 @@
-import { MentoringMeetingInvite } from "../../../entities/mentoring-meeting-invite"
+import { MentoringMeeting } from "../../../entities/mentoring-meeting"
 import { IMeetingInviteRepository } from "../../../repositories/Mentoring/Meeting-invite/IMentoring-meeting-invite-repository"
 import { IUseCase } from "../../../shared-global/IUse-case"
 import { IStudentRepository } from "../../../repositories/User/IStudent-repository"
@@ -7,27 +7,34 @@ import { EntityNotSavedError } from "../../../exceptions/entity-not-saved-error"
 import { InvalidParamError } from "../../../exceptions/invalid-param-error"
 import { EntityNotFound } from "../../../exceptions/entity-not-found"
 import { DateInUse } from "../../../exceptions/date-in-use"
+import { crypto } from "../../../../.."
+import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring-repository"
+import { MentoringNotInProgress } from "../../../exceptions/mentoring-not-in-progress-error"
+import { IMeetingRepository } from "../../../repositories/Mentoring/Meeting/IMentoring-meeting-repository"
 
-interface CreateMeetingInviteParams {
+
+interface CreateMeetingParams {
     idStudent: string
     idMentor: string
     date: Date
 }
 
-export class CreateMeetingInvite implements IUseCase<CreateMeetingInviteParams, MentoringMeetingInvite> {
+export class CreateMeeting implements IUseCase<CreateMeetingParams, MentoringMeeting> {
 
-    private readonly repository: IMeetingInviteRepository
+    private readonly repository: IMeetingRepository
+    private readonly mentoringRepository: IMentoringRepository
     private readonly studentRepository: IStudentRepository;
     private readonly mentorRepository: IMentorRepository;
 
-    constructor(repository: IMeetingInviteRepository, studentRepository: IStudentRepository, mentorRepository: IMentorRepository) {
+    constructor(repository: IMeetingRepository, mentoringRepository: IMentoringRepository, studentRepository: IStudentRepository, mentorRepository: IMentorRepository) {
 
         this.repository = repository;
         this.studentRepository = studentRepository;
         this.mentorRepository = mentorRepository
+        this.mentoringRepository = mentoringRepository
     }
 
-    async execute(params: CreateMeetingInviteParams): Promise<MentoringMeetingInvite> {
+    async execute(params: CreateMeetingParams): Promise<MentoringMeeting> {
 
         const errors = await this.validateParams(params)
 
@@ -36,9 +43,10 @@ export class CreateMeetingInvite implements IUseCase<CreateMeetingInviteParams, 
         }
 
         const id = crypto.randomUUID()
-        const newMentoringMeetingInvite = MentoringMeetingInvite.create(id, params.idStudent, params.idMentor, params.date);
+        const newMentoringMeeting = MentoringMeeting.create(params.date, params.idMentor, params.idStudent, id);
 
-        const created = await this.repository.save(newMentoringMeetingInvite)
+        const created = await this.repository.save(newMentoringMeeting)
+        
         if (!created) {
             throw new EntityNotSavedError()
         }
@@ -46,20 +54,31 @@ export class CreateMeetingInvite implements IUseCase<CreateMeetingInviteParams, 
         return created
     }
 
-    private async validateParams(params: CreateMeetingInviteParams): Promise<Error[] | null> {
+    private async validateParams(params: CreateMeetingParams): Promise<Error[] | null> {
 
         const errors: Error[] = [];
 
         const studentExists = this.studentRepository.findById(params.idStudent)
         const mentorExists = this.mentorRepository.findById(params.idStudent)
 
-        const dateInUseFilter: Partial<MentoringMeetingInvite> = {
+        
+        const mentoringInProgress = await this.mentoringRepository.findOne({
+            idStudent: params.idStudent,
+            idMentor: params.idMentor, 
+            status: "PROGRESS"
+        })
+          
+        const dateInUseFilter: Partial<MentoringMeeting> = {
             idMentor: params.idMentor,
             idStudent: params.idStudent,
             date: params.date
         }
 
-        const dateInUse = this.repository.findOne(dateInUseFilter)
+        const dateInUse = await this.repository.findOne(dateInUseFilter)
+
+        if (!mentoringInProgress) {
+            errors.push(new MentoringNotInProgress())
+        }
 
         if (dateInUse != null) {
             errors.push(new DateInUse(params.date))

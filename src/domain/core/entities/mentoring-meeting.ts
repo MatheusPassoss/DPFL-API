@@ -8,7 +8,7 @@ export class MentoringMeeting implements IEntity {
   public readonly idStudent: string
   public readonly idMentor: string
   public date: Date
-  public status: "PEDDING" | "CONFIRMED" | "CANCELED"
+  public status: "NOT-CONFIRMED" | "CONFIRMED" | "CANCELED"
 
   constructor(date: Date, idMentor: string, idStudent: string, id: string) {
 
@@ -18,7 +18,7 @@ export class MentoringMeeting implements IEntity {
     this.idStudent = idStudent
     this.createAt = new Date()
     this.updateAt = new Date()
-    this.status = "CONFIRMED"
+    this.status = "NOT-CONFIRMED"
   }
 
   static create(date: Date, idMentor: string, idStudent: string, id: string): MentoringMeeting {

@@ -1,14 +1,18 @@
-import { IMentoringRepository } from "../../repositories/Mentoring/IMentoring-repository";
-import { IUseCase } from "../../shared-global/IUse-case";
-import { IMentorRepository } from "../../repositories/User/IMentor-repository";
-import { IStudentRepository } from "../../repositories/User/IStudent-repository";
-import { InvalidParamError } from "../../exceptions/invalid-param-error";
-import { EntityNotFound } from "../../exceptions/entity-not-found";
-import { Mentoring } from "../../entities/metoring";
-import { IMeetingRepository } from "../../repositories/Mentoring/Meeting/IMentoring-meeting-repository";
-import { MentoringMeeting } from "../../entities/mentoring-meeting";
-import { NotEnoughMeetings } from "../../exceptions/not-enough-meetings";
-import { EntityNotUpdatedError } from "../../exceptions/entity-not-updated-error";
+import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring-repository";
+import { IUseCase } from "../../../shared-global/IUse-case";
+import { IMentorRepository } from "../../../repositories/User/IMentor-repository";
+import { IStudentRepository } from "../../../repositories/User/IStudent-repository";
+import { InvalidParamError } from "../../../exceptions/invalid-param-error";
+import { EntityNotFound } from "../../../exceptions/entity-not-found";
+import { Mentoring } from "../../../entities/metoring";
+import { IMeetingRepository } from "../../../repositories/Mentoring/Meeting/IMentoring-meeting-repository";
+import { MentoringMeeting } from "../../../entities/mentoring-meeting";
+import { NotEnoughMeetings } from "../../../exceptions/not-enough-meetings";
+import { EntityNotUpdatedError } from "../../../exceptions/entity-not-updated-error";
+
+
+// TO-DO: Um histórico para cada convite, registrando quando foi enviado, aceito, recusado ou expirado.
+// TO-DO: 12 Encontros mínimo pra completar
 
 interface CompleteMentoringParams {
     id: string
@@ -17,7 +21,6 @@ interface CompleteMentoringParams {
 }
 
 export class CompleteMentoring implements IUseCase<CompleteMentoringParams, Mentoring> {
-
 
     repository: IMentoringRepository
     private readonly meetingRepository: IMeetingRepository

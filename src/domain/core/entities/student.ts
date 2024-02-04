@@ -44,3 +44,20 @@ export class Student implements StudentData {
   }
 
 }
+
+// usar a api do via cep:   `https://viacep.com.br/ws/${cep}/json/`
+
+// exemplo do Json que retorna: 
+
+// {
+//   "cep": "05858-000",
+//   "logradouro": "Estrada de Itapecerica",
+//   "complemento": "de 4180 a 6300 - lado par",
+//   "bairro": "Jardim Vista Linda",
+//   "localidade": "São Paulo",
+//   "uf": "SP",
+//   "ibge": "3550308",
+//   "gia": "1004",
+//   "ddd": "11",
+//   "siafi": "7107"
+// }

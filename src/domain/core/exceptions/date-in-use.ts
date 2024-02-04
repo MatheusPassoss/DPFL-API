@@ -8,3 +8,4 @@ export class DateInUse extends Error {
         super(`Já foi enviado um convite para a data estabelecida: ${date}`)
     }
 }
+

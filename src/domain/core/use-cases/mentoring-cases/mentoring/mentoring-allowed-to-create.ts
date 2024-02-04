@@ -1,12 +1,12 @@
-import { MentoringInvite } from "../../entities/mentoring-invite";
-import { Mentoring } from "../../entities/metoring";
-import { EntityNotFound } from "../../exceptions/entity-not-found";
-import { InvalidParamError } from "../../exceptions/invalid-param-error";
-import { IMentoringRepository } from "../../repositories/Mentoring/IMentoring-repository";
-import { IMentoringInviteRepository } from "../../repositories/Mentoring/Invite/IMentoringInvite-repository";
-import { IMentorRepository } from "../../repositories/User/IMentor-repository";
-import { IStudentRepository } from "../../repositories/User/IStudent-repository";
-import { IUseCase } from "../../shared-global/IUse-case";
+import { MentoringInvite } from "../../../entities/mentoring-invite";
+import { Mentoring } from "../../../entities/metoring";
+import { EntityNotFound } from "../../../exceptions/entity-not-found";
+import { InvalidParamError } from "../../../exceptions/invalid-param-error";
+import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring-repository";
+import { IMentoringInviteRepository } from "../../../repositories/Mentoring/Invite/IMentoringInvite-repository";
+import { IMentorRepository } from "../../../repositories/User/IMentor-repository";
+import { IStudentRepository } from "../../../repositories/User/IStudent-repository";
+import { IUseCase } from "../../../shared-global/IUse-case";
 
 
 interface MentoringAllowedToMentoringParams {
