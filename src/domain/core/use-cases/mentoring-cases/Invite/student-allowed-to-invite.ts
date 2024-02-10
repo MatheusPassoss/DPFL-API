@@ -42,9 +42,6 @@ export class StudentAllowedToInvite implements IUseCase<StudentAllowedToInvitePa
             status: "PROGRESS"
         }
 
-
-
-
         const mentoringInviteAcceptedOrNull: MentoringInvite | null = await this.mentoringInviteRepository.findAcceptedInvite(filterMentoringInviteAccepted)  
 
         const mentoringInProgressOrNull: Mentoring | null = await this.mentoringRepository.findOne(filterMentoringInProgress);

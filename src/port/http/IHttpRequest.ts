@@ -1,6 +1,5 @@
 
-interface IHttpRequest<Body, METHOD, Headers> {
-    method: METHOD
-    headers: Headers
+export interface IHttpRequest {
+    headers: Headers[]
     body: Body
 }

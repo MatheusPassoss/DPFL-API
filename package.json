@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1550.0",
-    "dotenv": "^16.4.1"
+    "dotenv": "^16.4.1",
+    "fastify": "^4.26.0"
   }
 }

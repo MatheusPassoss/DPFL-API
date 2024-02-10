@@ -1,5 +1,5 @@
 
-interface IHttpResponse<Body, Headers> {
-    headers: Headers
+export interface IHttpResponse {
+    headers: Headers[]
     body: Body
 }
