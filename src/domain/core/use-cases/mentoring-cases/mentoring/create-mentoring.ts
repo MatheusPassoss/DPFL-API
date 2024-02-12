@@ -2,7 +2,7 @@ import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring
 import { InvalidParamError } from "../../../exceptions/invalid-param-error"
 import { Mentoring } from "../../../entities/metoring"
 import { EntityNotSavedError } from "../../../exceptions/entity-not-saved-error"
-import { crypto } from "../../../../.."
+import { crypto } from "../../../../../server"
 import { IStudentRepository } from "../../../repositories/User/IStudent-repository"
 import { IMentorRepository } from "../../../repositories/User/IMentor-repository"
 import { EntityNotFound } from "../../../exceptions/entity-not-found"

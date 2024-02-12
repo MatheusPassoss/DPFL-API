@@ -11,7 +11,7 @@ import { IUseCase } from "../../../shared-global/IUse-case";
 import { StudentAllowedToInvite } from "./student-allowed-to-invite";
 import { IMentoringRepository } from "../../../repositories/Mentoring/IMentoring-repository";
 import { StudentNotAllowedToInvite } from "../../../exceptions/student-not-allowed-to-invite";
-import { crypto } from "../../../../..";
+import { crypto } from "../../../../../server";
 
 interface CreateMentoringInviteParams {
     idMentor: string

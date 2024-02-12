@@ -2,9 +2,10 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "tsx src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +16,8 @@
     "@babel/preset-typescript": "^7.23.3",
     "@types/jest": "^29.5.11",
     "babel-jest": "^29.7.0",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "tsx": "^4.7.1"
   },
   "dependencies": {
     "aws-sdk": "^2.1550.0",

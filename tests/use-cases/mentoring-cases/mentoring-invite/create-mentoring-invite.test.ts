@@ -3,7 +3,7 @@ import { InMemoryMentoringRepository } from "../../../repositories/in-memory-men
 import { InMemoryStudentRepository } from "../../../repositories/in-memory-students-repository"
 import { CreateStudentUseCase } from "../../../../src/domain/core/use-cases/User/create-student"
 import { InMemoryMentoringInviteRepository } from "../../../repositories/in-memory-mentoring-invite-repository"
-import { crypto } from "../../../../src"
+import { crypto } from "../../../../src/server"
 import { CreateMentorUseCase } from "../../../../src/domain/core/use-cases/User/create-mentor"
 import { CreateMentoringInvite } from "../../../../src/domain/core/use-cases/mentoring-cases/Invite/create-metoring-invite"
 import { SendEmailNotificationService } from "../../../../src/application/services/email-service/send-email-notification"

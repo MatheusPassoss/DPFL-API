@@ -1,6 +1,6 @@
 import { Mentor } from "../../entities/mentor";
 import { IMentorRepository } from "../../repositories/User/IMentor-repository";
-import { crypto } from "../../../..";
+import { crypto } from "../../../../server";
 import { InvalidNameError } from "../../exceptions/invalid-name-error";
 import { InvalidCpfError } from "../../exceptions/invalid-cpf-error";
 import { EntityNotSavedError } from "../../exceptions/entity-not-saved-error"

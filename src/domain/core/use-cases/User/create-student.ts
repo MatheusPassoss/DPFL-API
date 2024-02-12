@@ -1,6 +1,6 @@
 import { Student } from "../../entities/student";
 import { IStudentRepository } from "../../repositories/User/IStudent-repository";
-import { crypto } from "../../../..";
+import { crypto } from "../../../../server";
 import { InvalidNameError } from "../../exceptions/invalid-name-error";
 import { InvalidCpfError } from "../../exceptions/invalid-cpf-error";
 import { EntityNotSavedError } from "../../exceptions/entity-not-saved-error"

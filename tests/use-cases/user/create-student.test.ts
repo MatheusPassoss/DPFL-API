@@ -1,4 +1,4 @@
-import { crypto } from "../../../src"
+import { crypto } from "../../../src/server"
 import { Student } from "../../../src/domain/core/entities/Student"
 import { InvalidCpfError } from "../../../src/domain/core/exceptions/invalid-cpf-error"
 import { InvalidParamError } from "../../../src/domain/core/exceptions/invalid-param-error"

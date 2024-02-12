@@ -1,5 +1,6 @@
+import { IncomingHttpHeaders } from 'http';
 
 export interface IHttpResponse {
-    headers: Headers[]
-    body: Body
+    headers: IncomingHttpHeaders[]
+    body: any
 }
