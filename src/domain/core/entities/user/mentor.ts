@@ -1,4 +1,6 @@
 import { IEntity } from "../../shared-global/IEntity"
+import { Adress } from "./adress-value-object"
+import { Role } from "./role-value-object"
 
 export interface MentorData {
   name: string,
@@ -6,14 +8,8 @@ export interface MentorData {
   cpf: string,
   phone: string,
   birthDate: Date,
-  address: {
-      cep: string,
-      city: string,
-      state: string,
-      road: string,
-      number: string,
-
-}
+  address: Adress,
+  role: Role,
 }
   
   export class Mentor implements IEntity {
@@ -24,15 +20,11 @@ export interface MentorData {
     cpf: string
     phone: string
     birthDate: Date
-    address: {
-        cep: string
-        city: string
-        state: string
-        road: string
-        number: string
-    }
+    address: Adress
+    role: Role
     createAt: Date;
     updateAt: Date;
+
 
     private constructor(mentor: MentorData, id: string) {
       this.id = id
@@ -42,6 +34,7 @@ export interface MentorData {
       this.birthDate = mentor.birthDate;
       this.phone = mentor.phone;
       this.address = mentor.address;
+      this.role = mentor.role;
       this.createAt = new Date();
       this.updateAt = new Date();
     }

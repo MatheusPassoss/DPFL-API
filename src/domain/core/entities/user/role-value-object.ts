@@ -8,9 +8,9 @@ interface RoleProps {
 
 export class Role {
 
-    readonly persona: string
-    readonly idPermissionToken: string
-    readonly status: string
+    readonly persona: "student" | "mentor" | "admin"
+    readonly idPermissionToken: string | "default"
+    readonly status: "active" | "not-active"
 
     constructor({idPermissionToken, persona, status}: RoleProps) {
         this.persona = persona

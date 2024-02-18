@@ -5,10 +5,6 @@ import { InMemoryMentorRepository } from "../../repositories/in-memory-mentor-re
 import { InMemoryMentoringInviteRepository } from "../../repositories/in-memory-mentoring-invite-repository"
 import { InMemoryMentoringRepository } from "../../repositories/in-memory-mentoring-repository"
 import { InMemoryStudentRepository } from "../../repositories/in-memory-students-repository"
- 
-
-
-
 
 describe("Send Mentoring Invite use case tests", () => {
 

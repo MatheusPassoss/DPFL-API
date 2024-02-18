@@ -1,4 +1,3 @@
-import { MentorshipInviteService } from "../../domain/core/domain-services/mentorship-invite-service";
 import { InvalidDataError } from "../../domain/core/exceptions/invalid-data-error";
 import { MentorNotAllowedToInvite } from "../../domain/core/exceptions/mentor-not-allowed-to-invite";
 import { StudentNotAllowedToInvite } from "../../domain/core/exceptions/student-not-allowed-to-invite";
@@ -6,6 +5,7 @@ import { IMentoringRepository } from "../../domain/core/repositories/Mentoring/I
 import { IMentoringInviteRepository } from "../../domain/core/repositories/Mentoring/Invite/IMentoringInvite-repository";
 import { IMentorRepository } from "../../domain/core/repositories/User/IMentor-repository";
 import { IStudentRepository } from "../../domain/core/repositories/User/IStudent-repository";
+import { MentorshipService } from "../../domain/core/domain-services/mentorship-service";
 
 interface SendInviteParams {
     idStudent: string, 
@@ -38,9 +38,15 @@ export class SendMentoringInvite {
             throw new InvalidDataError()
         }
  
-        const invite = new MentorshipInviteService(student, mentor).create()
+        const invite = new MentorshipService().createInvite(mentor, student)
 
-        return invite
+        if (!invite) {
+            // notificar o publisher que o invite deu erro na hora da criação pra ele enviar o e-mail
+        }
+
+        if (invite) {
+            // notificar o publisher que o invite foi criado pra ele enviar o e-mail
+        }
     }
     
 }
