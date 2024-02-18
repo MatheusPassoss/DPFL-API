@@ -64,7 +64,9 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
         }
 
 
-    ]
+    ]   
+
+     
 
     async listByStatusAndMentorId(filter: Partial<MentoringInvite>): Promise<MentoringInvite[] | null> {
        
@@ -83,6 +85,23 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
         return invites
     }
 
+    async listByStatusAndStudentId(filter: Partial<MentoringInvite>): Promise<MentoringInvite[] | null> {
+
+        if (!filter.idStudent || !filter.status) {
+            throw new InvalidDataError()
+        }
+
+        const invites: MentoringInvite[] = []
+
+        this.MentoringInvites.forEach(invite => {
+            if (invite.idStudent == filter.idStudent && invite.status == filter.status) {
+                invites.push(invite)
+            }
+        })
+
+        return invites
+
+    }
 
     async findOneInvite(filter: Partial<MentoringInvite>): Promise<MentoringInvite | null> {
         const MentoringInvite = await this.MentoringInvites.find(MentoringInvite => MentoringInvite.idStudent == filter.idStudent && MentoringInvite.idMentor == filter.idMentor && MentoringInvite.status == filter.status)
@@ -130,7 +149,11 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
 
     async acceptInvite(filter: Partial<MentoringInvite>, update: Partial<MentoringInvite>): Promise<MentoringInvite | null> {
         const MentoringInvite = await this.MentoringInvites.find(MentoringInvites => MentoringInvites.id == filter.id && MentoringInvites.idStudent == filter.idStudent && MentoringInvites.idMentor == filter.idMentor && MentoringInvites.status == filter.status)
+        
 
+        console.log(filter.id)
+        console.log(filter.idStudent)
+        console.log(filter.idMentor)
         if (!MentoringInvite) {
             return null
         }
@@ -261,8 +284,8 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
     }
 
 
-    findByEmail: (email: string) => Promise<MentoringInvite | null>;
-    update: (entity: Partial<MentoringInvite>) => Promise<MentoringInvite | null>;
+    findByEmail!: (email: string) => Promise<MentoringInvite | null>;
+    update!: (entity: Partial<MentoringInvite>) => Promise<MentoringInvite | null>;
 
 
 

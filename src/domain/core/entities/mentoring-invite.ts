@@ -1,6 +1,5 @@
 import { IEntity } from "../shared-global/IEntity"
 
-// token
 
 interface MentoringInviteParams {
     id: string,
@@ -10,8 +9,11 @@ interface MentoringInviteParams {
     updateAt: Date
 }
 
+type InviteStatus = {
+    status: "PEDDING" | "ACCEPTED" | "REFUSED" | "CANCELED"
+}
 
-export class MentoringInvite implements MentoringInviteParams {
+export class MentoringInvite implements MentoringInviteParams, IEntity{
 
     public readonly id: string
     public readonly idMentor: string
@@ -20,8 +22,8 @@ export class MentoringInvite implements MentoringInviteParams {
     public updateAt: Date
     public status: "PEDDING" | "ACCEPTED" | "REFUSED" | "CANCELED"
 
-    private constructor(idMentor: string, idStudent: string, id:string, date?: Date) {
-        this.id = id
+    private constructor(idMentor: string, idStudent: string, id?:string, date?: Date) {
+        this.id = crypto.randomUUID()
         this.idStudent = idStudent
         this.idMentor = idMentor
         this.createAt = date ? date : new Date()
@@ -29,10 +31,9 @@ export class MentoringInvite implements MentoringInviteParams {
         this.updateAt = new Date()
     }
 
-    static create(idMentor: string, idStudent: string, id:string, date?: Date): MentoringInvite {
-        return new MentoringInvite(idMentor, idStudent, id)
+    static create(idMentor: string, idStudent: string, id?:string, date?: Date): MentoringInvite {
+        return new MentoringInvite(idMentor, idStudent)
     }
-
 
 }
 

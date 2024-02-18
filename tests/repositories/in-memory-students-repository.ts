@@ -1,4 +1,4 @@
-import { Student } from "../../src/domain/core/entities/Student";
+import { Student } from "../../src/domain/core/entities/student";
 import { InvalidDataError } from "../../src/domain/core/exceptions/invalid-data-error";
 import { IStudentRepository } from "../../src/domain/core/repositories/User/IStudent-repository";
 
@@ -94,6 +94,8 @@ export class InMemoryStudentRepository implements IStudentRepository {
             return null
         }
 
+        console.log(student)
+
         return student
     }
 
@@ -109,9 +111,9 @@ export class InMemoryStudentRepository implements IStudentRepository {
     }
 
 
-    update: (student: Partial<Student>) => Promise<Student | null>;
-    findByMentor: (emailMentor: string) => Promise<Student | null>;
-    listByModule: (module: string) => Promise<Student[] | null> ;
-    listWithoutMentor: () => Promise<Student[] | null>;
+    update!: (student: Partial<Student>) => Promise<Student | null>;
+    findByMentor!: (emailMentor: string) => Promise<Student | null>;
+    listByModule!: (module: string) => Promise<Student[] | null>;
+    listWithoutMentor!: () => Promise<Student[] | null>;
 
 }

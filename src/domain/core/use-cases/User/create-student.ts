@@ -42,10 +42,12 @@ export class CreateStudentUseCase implements IUseCase<CreateStudentParams, Stude
         if (errors) {
             throw new InvalidParamError(errors);
         }
+        
         const id = crypto.randomUUID()
         const newStudent = Student.create(params, params.id ? params.id : id);
 
         const saved = await this.repository.save(newStudent);
+
         if (!saved) {
             throw new EntityNotSavedError()
         }

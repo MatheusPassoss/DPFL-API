@@ -4,11 +4,11 @@ import { MentoringInvite } from "../../../entities/mentoring-invite";
 export interface IMentoringInviteRepository extends IRepository<MentoringInvite> {
 
     listByMentorId: (idMentor: string) => Promise<MentoringInvite[] | null>
-    listByStudentId: (idMentor: string) => Promise<MentoringInvite[] | null>
+    listByStudentId: (idStudent: string) => Promise<MentoringInvite[] | null>
 
     listByStatusAndMentorId: (filter: Partial<MentoringInvite>) => Promise<MentoringInvite[] | null>
     
-
+    listByStatusAndStudentId: (filter: Partial<MentoringInvite>) => Promise<MentoringInvite[] | null>
 
     findByStudentId: (idStudent: string) => Promise<MentoringInvite | null>
     findByMentorId: (idMentor: string) => Promise<MentoringInvite | null>

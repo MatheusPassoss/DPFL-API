@@ -37,6 +37,59 @@ export class InMemoryMentoringRepository implements IMentoringRepository {
 
     }
 
+    async findByMentorId(mentorId: string): Promise<Mentoring | null> {
+        const mentoring = await this.mentorings.find(mentoring => mentoring.idMentor == mentorId)
+
+        if (!mentoring) {
+            return null
+        }
+
+        return mentoring
+    }
+
+    async findByStudentId(studentId: string): Promise<Mentoring | null> {
+        const mentoring = await this.mentorings.find(mentoring => mentoring.idStudent === studentId)
+
+        if (!mentoring) {
+            return null
+        }
+
+        return mentoring
+    }
+
+    async findByMentorIdAndStatus(filter: Partial<Mentoring>): Promise<Mentoring | null> {
+
+        if (!filter.idMentor|| !filter.status) {
+            throw new InvalidDataError()
+        }
+
+        const mentoring = await this.mentorings.find(mentoring => filter.idMentor === mentoring.idMentor && filter.status === mentoring.status)
+        
+        if (!mentoring) {
+            return null
+        }
+
+        return mentoring
+    }
+
+
+
+    async findByStudentIdAndStatus(filter: Partial<Mentoring>): Promise<Mentoring | null> {
+
+   
+        if (!filter.idStudent|| !filter.status) {
+            throw new InvalidDataError()
+        }
+
+        const mentoring = await this.mentorings.find(mentoring => filter.idStudent === mentoring.idStudent && filter.status === mentoring.status)
+        
+        if (!mentoring) {
+            return null
+        }
+        
+        return mentoring
+    }   
+
     async findOne(filter: Partial<Mentoring>): Promise<Mentoring | null> {
         const filtred = await this.mentorings.find(mentoring => mentoring.idMentor == filter.idMentor && mentoring.idStudent == filter.idStudent && mentoring.status == filter.status)
 
@@ -79,9 +132,8 @@ export class InMemoryMentoringRepository implements IMentoringRepository {
         return entity
     }
 
-    update: (entity: Partial<Mentoring>) => Promise<Mentoring | null>;
-    updateMany: (filter: Partial<Mentoring>) => Promise<Mentoring[]>;
-    findByEmail: (email: string) => Promise<Mentoring | null>;
-    findByMentorId: (studentId: string) => Promise<Mentoring[]>;
-    findByStudentId: (studentId: string) => Promise<Mentoring[]>;
+    update!: (entity: Partial<Mentoring>) => Promise<Mentoring | null>;
+    updateMany!: (filter: Partial<Mentoring>) => Promise<Mentoring[]>;
+    findByEmail!: (email: string) => Promise<Mentoring | null>;
+
 }

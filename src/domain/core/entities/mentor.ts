@@ -42,11 +42,15 @@ export interface MentorData {
       this.birthDate = mentor.birthDate;
       this.phone = mentor.phone;
       this.address = mentor.address;
+      this.createAt = new Date();
+      this.updateAt = new Date();
     }
   
    static create(params: MentorData, id: string): Mentor {
      const mentor = new Mentor(params, id)
      return mentor
    }
+
+   
   
   }

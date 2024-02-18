@@ -40,8 +40,9 @@ export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInvitePara
         }
 
         const update = await this.MentoringInviteRepository.acceptInvite(filterInvite, updateInvite);
-
+    
         if (!update) {
+             
             throw new EntityNotUpdatedError()
         } else {
  

@@ -88,6 +88,8 @@ export class InMemoryMentorRepository implements IMentorRepository {
             return mentor
         }
 
+        console.log(mentor)
+
         return null
     }
 
@@ -116,8 +118,8 @@ export class InMemoryMentorRepository implements IMentorRepository {
     }
 
 
-    update: (entity: Partial<Mentor>) => Promise<Mentor>;
-    findByStudent: (emailStudent: string) => Promise<Mentor>;
-    listMentors: () => Promise<Mentor[]>;
-    listWithoutStudent: () => Promise<Mentor[]>;
+    update!: (entity: Partial<Mentor>) => Promise<Mentor>;
+    findByStudent!: (emailStudent: string) => Promise<Mentor>;
+    listMentors!: () => Promise<Mentor[]>;
+    listWithoutStudent!: () => Promise<Mentor[]>;
 }

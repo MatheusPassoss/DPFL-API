@@ -18,7 +18,9 @@ export class FastifyAdapter implements IHttpContext {
         
         const resquest = {
             headers: this.req.raw.headers,
-            body: this.req.body
+            body: this.req.body,
+            params: this.req.params,
+            query: this.req.query
         }
 
         return resquest
