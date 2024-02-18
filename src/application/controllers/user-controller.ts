@@ -1,4 +1,4 @@
-import { Student } from "../../domain/core/entities/student";
+import { Student } from "../../domain/core/entities/user/student";
 import { IMentorRepository } from "../../domain/core/repositories/User/IMentor-repository";
 import { IStudentRepository } from "../../domain/core/repositories/User/IStudent-repository";
 import { CreateMentorUseCase } from "../../domain/core/use-cases/User/create-mentor";

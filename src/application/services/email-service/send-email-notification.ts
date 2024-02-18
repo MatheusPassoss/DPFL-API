@@ -1,5 +1,5 @@
 import SES from "aws-sdk/clients/ses"
-import { Student } from "../../../domain/core/entities/Student"
+import { Student } from "../../../domain/core/entities/user/student"
 
 
 export class SendEmailNotificationService {

@@ -1,12 +1,13 @@
-import { Mentor } from "../entities/mentor";
+import { Mentor } from "../entities/user/mentor";
 import { MentoringInvite } from "../entities/mentoring-invite";
-import { Mentoring } from "../entities/metoring";
-import { Student } from "../entities/student";
-import { MentorNotAllowedToInvite } from "../exceptions/mentor-not-allowed-to-invite";
-import { StudentNotAllowedToInvite } from "../exceptions/student-not-allowed-to-invite";
+import { Student } from "../entities/user/student";
 
 
 
+interface AcceptInvitesParams {
+    idStudent: string
+    idMentor: string
+}
 
 export class MentorshipInviteService {
 
@@ -15,12 +16,11 @@ export class MentorshipInviteService {
 
     }
 
-    async execute(): Promise<MentoringInvite> {
+   create(): MentoringInvite {
         
         const newMentoringInvite = MentoringInvite.create(this.mentor.id, this.student.id);
 
         return newMentoringInvite 
     }
-
 
 } 

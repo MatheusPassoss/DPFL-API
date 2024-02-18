@@ -1,4 +1,4 @@
-import { Mentor } from "../../entities/mentor";
+import { Mentor } from "../../entities/user/mentor";
 import { IRepository } from "../../shared-global/IRepository";
 
 

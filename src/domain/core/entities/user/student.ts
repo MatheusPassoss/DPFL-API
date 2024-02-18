@@ -1,16 +1,14 @@
+import { Adress } from "./adress-value-object"
+import { Role } from "./role-value-object"
+
 export interface StudentData {
   name: string,
   email: string,
   cpf: string,
   phone: string,
   birthDate: Date,
-  address: {
-      cep: string,
-      city: string,
-      state: string,
-      road: string,
-      number: string,
-}
+  address: Adress,
+  role: Role,
 }
 
 export class Student implements StudentData {
@@ -21,13 +19,9 @@ export class Student implements StudentData {
   cpf: string
   phone: string
   birthDate: Date
-  address: {
-      cep: string
-      city: string
-      state: string
-      road: string
-      number: string
-  }
+  address: Adress
+  role: Role
+
 
   private constructor(student: StudentData, id: string) {
     this.id = id
@@ -37,6 +31,7 @@ export class Student implements StudentData {
     this.phone = student.phone
     this.birthDate = student.birthDate
     this.address = student.address
+    this.role = student.role
   }
 
   static create(student: StudentData, id: string): Student {

@@ -1,4 +1,4 @@
-import { IEntity } from "../shared-global/IEntity"
+import { IEntity } from "../../shared-global/IEntity"
 
 export interface MentorData {
   name: string,

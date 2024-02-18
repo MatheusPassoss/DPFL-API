@@ -1,6 +1,7 @@
 import { MentorshipInviteService } from "../../domain/core/domain-services/mentorship-invite-service";
 import { InvalidDataError } from "../../domain/core/exceptions/invalid-data-error";
 import { MentorNotAllowedToInvite } from "../../domain/core/exceptions/mentor-not-allowed-to-invite";
+import { StudentNotAllowedToInvite } from "../../domain/core/exceptions/student-not-allowed-to-invite";
 import { IMentoringRepository } from "../../domain/core/repositories/Mentoring/IMentoring-repository";
 import { IMentoringInviteRepository } from "../../domain/core/repositories/Mentoring/Invite/IMentoringInvite-repository";
 import { IMentorRepository } from "../../domain/core/repositories/User/IMentor-repository";
@@ -19,7 +20,6 @@ export class SendMentoringInvite {
     
     async execute({idStudent, idMentor}: SendInviteParams) {
 
-
         const mentorPeddingInvites = await this.repository.listByStatusAndMentorId({idMentor, status: "PEDDING"})
         const mentorMentorshipInProgress = await this.mentoringRepository.findByMentorIdAndStatus({idMentor, status: "PROGRESS"})
         const studentMentorshipInProgress = await this.mentoringRepository.findByStudentIdAndStatus({idStudent, status: "PROGRESS"})
@@ -31,14 +31,14 @@ export class SendMentoringInvite {
         }
 
         if (studentMentorshipInProgress != null) {
-            throw new MentorNotAllowedToInvite()
+            throw new StudentNotAllowedToInvite()
         }
 
         if (!mentor || !student) {
             throw new InvalidDataError()
         }
  
-        const invite = await new MentorshipInviteService(student, mentor).execute
+        const invite = new MentorshipInviteService(student, mentor).create()
 
         return invite
     }

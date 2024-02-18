@@ -1,4 +1,4 @@
-import { Mentor } from "../../src/domain/core/entities/mentor";
+import { Mentor } from "../../src/domain/core/entities/user/mentor";
 import { EntityNotFound } from "../../src/domain/core/exceptions/entity-not-found";
 import { InvalidDataError } from "../../src/domain/core/exceptions/invalid-data-error";
 import { IMentorRepository } from "../../src/domain/core/repositories/User/IMentor-repository";

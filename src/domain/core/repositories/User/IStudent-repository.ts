@@ -1,4 +1,4 @@
-import { Student } from "../../entities/Student";
+import { Student } from "../../entities/user/student";
 import { IRepository } from "../../shared-global/IRepository";
 
 

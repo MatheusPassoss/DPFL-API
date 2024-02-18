@@ -1,4 +1,4 @@
-import { Student } from "../../entities/student";
+import { Student } from "../../entities/user/student";
 import { IStudentRepository } from "../../repositories/User/IStudent-repository";
 import { crypto } from "../../../../server";
 import { InvalidNameError } from "../../exceptions/invalid-name-error";

@@ -1,5 +1,5 @@
 import { crypto } from "../../../src/server"
-import { Student } from "../../../src/domain/core/entities/Student"
+import { Student } from "../../../src/domain/core/entities/user/student"
 import { InvalidCpfError } from "../../../src/domain/core/exceptions/invalid-cpf-error"
 import { InvalidParamError } from "../../../src/domain/core/exceptions/invalid-param-error"
 import { CreateStudentUseCase } from "../../../src/domain/core/use-cases/User/create-student"

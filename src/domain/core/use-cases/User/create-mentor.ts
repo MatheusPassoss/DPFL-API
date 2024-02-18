@@ -1,4 +1,4 @@
-import { Mentor } from "../../entities/mentor";
+import { Mentor } from "../../entities/user/mentor";
 import { IMentorRepository } from "../../repositories/User/IMentor-repository";
 import { crypto } from "../../../../server";
 import { InvalidNameError } from "../../exceptions/invalid-name-error";

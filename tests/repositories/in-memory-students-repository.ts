@@ -1,4 +1,4 @@
-import { Student } from "../../src/domain/core/entities/student";
+import { Student } from "../../src/domain/core/entities/user/student";
 import { InvalidDataError } from "../../src/domain/core/exceptions/invalid-data-error";
 import { IStudentRepository } from "../../src/domain/core/repositories/User/IStudent-repository";
 
