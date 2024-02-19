@@ -1,6 +1,7 @@
 import { MentoringInvite } from "../../src/domain/core/entities/mentoring-invite";
 import { EntityNotFound } from "../../src/domain/core/exceptions/entity-not-found";
 import { InvalidDataError } from "../../src/domain/core/exceptions/invalid-data-error";
+import { InvalidInviteStatusError } from "../../src/domain/core/exceptions/invalid-invite-status-error";
 import { IMentoringInviteRepository } from "../../src/domain/core/repositories/Mentoring/Invite/IMentoringInvite-repository";
 
 
@@ -15,7 +16,28 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
             idMentor: '89852778-6118-428c-8e49-138e71643faf',
             status: "ACCEPTED",
             createAt: new Date(),
-            updateAt: new Date()
+            updateAt: new Date(),
+            acceptInvite: function (): void {
+                if (this.status != "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status);
+                }
+
+                this.status = "ACCEPTED";
+            },
+            refuseInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "REFUSED"
+            },
+            cancelInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "CANCELED"
+            }
         },
 
         {
@@ -24,16 +46,58 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
             idMentor: '80052778-6118-123c-8e49-138e71643faf',
             status: "PEDDING",
             createAt: new Date(),
-            updateAt: new Date()
+            updateAt: new Date(),
+            acceptInvite: function (): void {
+                if (this.status != "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status);
+                }
+
+                this.status = "ACCEPTED";
+            },
+            refuseInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "REFUSED"
+            },
+            cancelInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "CANCELED"
+            }
         },
-  
+
         {
             id: 'wwwwwwe-fd4c-44b4-9f0a-f684cc42e953',
             idStudent: '66ed35ad-2671-473f-9z0b-206771a0a786',
             idMentor: '85952000-6118-123c-8e49-138e71643faf',
             status: "CANCELED",
             createAt: new Date(),
-            updateAt: new Date()
+            updateAt: new Date(),
+            acceptInvite: function (): void {
+                if (this.status != "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status);
+                }
+
+                this.status = "ACCEPTED";
+            },
+            refuseInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "REFUSED"
+            },
+            cancelInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "CANCELED"
+            }
         },
 
         {
@@ -42,7 +106,28 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
             idMentor: '85952000-6118-123c-8e49-138e71643faf',
             status: "REFUSED",
             createAt: new Date(),
-            updateAt: new Date()
+            updateAt: new Date(),
+            acceptInvite: function (): void {
+                if (this.status != "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status);
+                }
+
+                this.status = "ACCEPTED";
+            },
+            refuseInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "REFUSED"
+            },
+            cancelInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "CANCELED"
+            }
         },
 
         {
@@ -51,7 +136,28 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
             idMentor: '70152000-6118-123c-8e49-138e71643fa',
             status: "CANCELED",
             createAt: new Date(),
-            updateAt: new Date()
+            updateAt: new Date(),
+            acceptInvite: function (): void {
+                if (this.status != "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status);
+                }
+
+                this.status = "ACCEPTED";
+            },
+            refuseInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "REFUSED"
+            },
+            cancelInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "CANCELED"
+            }
         },
 
         {
@@ -60,16 +166,38 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
             idMentor: '70152000-6118-123c-8e49-138e71643fa',
             status: "REFUSED",
             createAt: new Date(),
-            updateAt: new Date()
+            updateAt: new Date(),
+            acceptInvite: function (): void {
+                if (this.status != "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status);
+                }
+
+                this.status = "ACCEPTED";
+            },
+            refuseInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "REFUSED"
+            },
+            cancelInvite: function (): void {
+                if (this.status !== "PEDDING") {
+                    throw new InvalidInviteStatusError(this.status)
+                }
+
+                this.status = "CANCELED"
+            }
         }
 
 
-    ]   
+    ]
 
-     
+
+
 
     async listByStatusAndMentorId(filter: Partial<MentoringInvite>): Promise<MentoringInvite[] | null> {
-       
+
         if (!filter.idMentor || !filter.status) {
             throw new InvalidDataError()
         }
@@ -149,7 +277,7 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
 
     async acceptInvite(filter: Partial<MentoringInvite>, update: Partial<MentoringInvite>): Promise<MentoringInvite | null> {
         const MentoringInvite = await this.MentoringInvites.find(MentoringInvites => MentoringInvites.id == filter.id && MentoringInvites.idStudent == filter.idStudent && MentoringInvites.idMentor == filter.idMentor && MentoringInvites.status == filter.status)
-        
+
 
         console.log(filter.id)
         console.log(filter.idStudent)

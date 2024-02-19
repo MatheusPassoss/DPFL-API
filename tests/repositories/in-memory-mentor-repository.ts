@@ -18,8 +18,13 @@ export class InMemoryMentorRepository implements IMentorRepository {
                 cep: "12345",
                 city: "Cidade3",
                 state: "Estado3",
-                road: "Rua3",
+                street: "Rua3",
                 number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "mentor",
+                status: "active"
             },
             createAt: new Date(),
             updateAt: new Date()
@@ -36,8 +41,13 @@ export class InMemoryMentorRepository implements IMentorRepository {
                 cep: "12345",
                 city: "Cidade3",
                 state: "Estado3",
-                road: "Rua3",
+                street: "Rua3",
                 number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "mentor",
+                status: "active"
             },
             createAt: new Date(),
             updateAt: new Date()
@@ -54,8 +64,13 @@ export class InMemoryMentorRepository implements IMentorRepository {
                 cep: "12345",
                 city: "Cidade3",
                 state: "Estado3",
-                road: "Rua3",
+                street: "Rua3",
                 number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "mentor",
+                status: "active"
             },
             createAt: new Date(),
             updateAt: new Date()
@@ -72,8 +87,13 @@ export class InMemoryMentorRepository implements IMentorRepository {
                 cep: "12345",
                 city: "Cidade3",
                 state: "Estado3",
-                road: "Rua3",
+                street: "Rua3",
                 number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "mentor",
+                status: "active"
             },
             createAt: new Date(),
             updateAt: new Date()

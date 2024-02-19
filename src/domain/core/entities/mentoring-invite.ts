@@ -1,3 +1,4 @@
+import { InvalidInviteStatusError } from "../exceptions/invalid-invite-status-error"
 import { IEntity } from "../shared-global/IEntity"
 
 
@@ -9,9 +10,6 @@ interface MentoringInviteParams {
     updateAt: Date
 }
 
-type InviteStatus = {
-    status: "PEDDING" | "ACCEPTED" | "REFUSED" | "CANCELED"
-}
 
 export class MentoringInvite implements MentoringInviteParams, IEntity{
 
@@ -34,6 +32,30 @@ export class MentoringInvite implements MentoringInviteParams, IEntity{
     static create(idMentor: string, idStudent: string, id?:string, date?: Date): MentoringInvite {
         return new MentoringInvite(idMentor, idStudent)
     }
+
+    public acceptInvite() {
+         if (this.status !== "PEDDING") {
+            throw new InvalidInviteStatusError(this.status)
+         }
+
+         this.status = "ACCEPTED"
+    }
+
+    public refuseInvite() {
+        if (this.status !== "PEDDING") {
+           throw new InvalidInviteStatusError(this.status)
+        }
+
+        this.status = "REFUSED"
+   }
+
+   public cancelInvite() {
+    if (this.status !== "PEDDING") {
+       throw new InvalidInviteStatusError(this.status)
+    }
+
+    this.status = "CANCELED"
+}
 
 }
 

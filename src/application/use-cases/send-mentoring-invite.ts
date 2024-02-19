@@ -45,6 +45,7 @@ export class SendMentoringInvite {
         }
 
         if (invite) {
+            this.repository.save(invite)
             // notificar o publisher que o invite foi criado pra ele enviar o e-mail
         }
     }

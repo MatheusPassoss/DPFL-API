@@ -28,7 +28,7 @@ export class Mentoring implements IEntity{
     updateAt: Date
     public status: "PROGRESS" | "STOPPED" | "CANCELED" | "COMPLETED"
     
-    private constructor(student: StudentParams, mentor: MentorParams, id: string, date?: Date) {
+    private constructor(student: StudentParams, mentor: MentorParams) {
 
         this.idStudent = student.idStudent
         
@@ -39,13 +39,14 @@ export class Mentoring implements IEntity{
         this.nameMentor = mentor.name
         this.emailMentor = mentor.email
 
-        this.id = id
-        this.createAt = date ? date : new Date()
+        this.id = crypto.randomUUID()
+        this.createAt = new Date()
         this.status = "PROGRESS"
+        this.updateAt = new Date()
     }
 
-    static create(student: StudentParams, mentor: MentorParams, id: string, date?: Date): Mentoring {
-        return new Mentoring(student, mentor, id)
+    static create(student: StudentParams, mentor: MentorParams): Mentoring {
+        return new Mentoring(student, mentor)
     }
     
 }
