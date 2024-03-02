@@ -6,6 +6,8 @@ import { IMentoringInviteRepository } from "../../domain/core/repositories/Mento
 import { IMentorRepository } from "../../domain/core/repositories/User/IMentor-repository";
 import { IStudentRepository } from "../../domain/core/repositories/User/IStudent-repository";
 import { MentorshipService } from "../../domain/core/domain-services/mentorship-service";
+import { InvitationSentEvent } from "../events/invitation-sent-event";
+import { SendEmailNotificationService } from "../services/email-service/send-email-notification";
 
 interface SendInviteParams {
     idStudent: string, 
@@ -46,7 +48,10 @@ export class SendMentoringInvite {
 
         if (invite) {
             this.repository.save(invite)
-            // notificar o publisher que o invite foi criado pra ele enviar o e-mail
+            const mailService = new SendEmailNotificationService()
+            const invitationSentEvent = new InvitationSentEvent(mailService, invite)
+            
+            //this.publisher.publish(invitationSentEvent)
         }
     }
     

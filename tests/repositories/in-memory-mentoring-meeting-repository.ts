@@ -21,15 +21,15 @@ export class InMemoryMentoryngMeetingRepository implements IMeetingRepository {
     ]
 
 
-    update: (entity: Partial<MentoringMeeting>) => Promise<MentoringMeeting | null>;
+    update!: (entity: Partial<MentoringMeeting>) => Promise<MentoringMeeting | null>;
 
-    findByEmail: (email: string) => Promise<MentoringMeeting | null>;
+    findByEmail!: (email: string) => Promise<MentoringMeeting | null>;
 
     
-    findMany: (filter: Partial<MentoringMeeting>) => Promise<MentoringMeeting[] | null>;
+    findMany!: (filter: Partial<MentoringMeeting>) => Promise<MentoringMeeting[] | null>;
     
     
-    findOneAndUpdate: (filter: Partial<MentoringMeeting>, updatePartial: Partial<MentoringMeeting>) => Promise<MentoringMeeting | null>;
+    findOneAndUpdate!: (filter: Partial<MentoringMeeting>, updatePartial: Partial<MentoringMeeting>) => Promise<MentoringMeeting | null>;
     
     async findOne(filter: Partial<MentoringMeeting>): Promise<MentoringMeeting | null> {
 

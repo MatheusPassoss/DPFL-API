@@ -1,3 +1,4 @@
+import { IEntity } from "../../shared-global/IEntity"
 import { Adress } from "./adress-value-object"
 import { Role } from "./role-value-object"
 
@@ -11,7 +12,7 @@ export interface StudentData {
   role: Role,
 }
 
-export class Student implements StudentData {
+export class Student implements IEntity {
   
   id: string
   name: string
@@ -21,6 +22,8 @@ export class Student implements StudentData {
   birthDate: Date
   address: Adress
   role: Role
+  createAt: Date;
+  updateAt: Date;
 
 
   private constructor(student: StudentData, id: string) {
@@ -32,6 +35,8 @@ export class Student implements StudentData {
     this.birthDate = student.birthDate
     this.address = student.address
     this.role = student.role
+    this.createAt = new Date()
+    this.updateAt = new Date()
   }
 
   static create(student: StudentData, id: string): Student {
@@ -39,20 +44,3 @@ export class Student implements StudentData {
   }
 
 }
-
-// usar a api do via cep:   `https://viacep.com.br/ws/${cep}/json/`
-
-// exemplo do Json que retorna: 
-
-// {
-//   "cep": "05858-000",
-//   "logradouro": "Estrada de Itapecerica",
-//   "complemento": "de 4180 a 6300 - lado par",
-//   "bairro": "Jardim Vista Linda",
-//   "localidade": "São Paulo",
-//   "uf": "SP",
-//   "ibge": "3550308",
-//   "gia": "1004",
-//   "ddd": "11",
-//   "siafi": "7107"
-// }
