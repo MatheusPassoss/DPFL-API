@@ -15,6 +15,8 @@ export class MentorshipService {
         }
 
         if (whoReceived.role.persona !== "student") {
+
+            console.log(whoReceived.role.persona)
             throw new StudentNotAllowedToInvite()
         }
 

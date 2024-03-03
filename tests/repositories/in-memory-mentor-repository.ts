@@ -97,6 +97,29 @@ export class InMemoryMentorRepository implements IMentorRepository {
             },
             createAt: new Date(),
             updateAt: new Date()
+        },
+
+        {
+            id: "21052000-6118-123c-8e49-138e71643fa",
+            name: "teste-mentor",
+            email: "matheuspassos.work@gmail.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                street: "Rua3",
+                number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "mentor",
+                status: "active"
+            },
+            createAt: new Date(),
+            updateAt: new Date()
         }
 
     ]

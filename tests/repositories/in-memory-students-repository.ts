@@ -13,13 +13,20 @@ export class InMemoryStudentRepository implements IStudentRepository {
             cpf: "98765432111",
             phone: "11 987654322",
             birthDate: new Date(),
+            role: {
+                persona: "student",
+                status: "active",
+                idPermissionToken: ""
+            },
             address: {
                 cep: "12345",
                 city: "Cidade3",
                 state: "Estado3",
-                road: "Rua3",
+                street: "Rua3",
                 number: "789",
-            }
+            },
+            createAt: new Date(),
+            updateAt: new Date()
         },
 
         {
@@ -29,13 +36,20 @@ export class InMemoryStudentRepository implements IStudentRepository {
             cpf: "98765432111",
             phone: "11 987654322",
             birthDate: new Date(),
+                        role: {
+                persona: "student",
+                status: "active",
+                idPermissionToken: ""
+            },
             address: {
                 cep: "12345",
                 city: "Cidade3",
                 state: "Estado3",
-                road: "Rua3",
+                street: "Rua3",
                 number: "789",
-            }
+            },
+            createAt: new Date(),
+            updateAt: new Date()
         },
 
         {
@@ -45,13 +59,20 @@ export class InMemoryStudentRepository implements IStudentRepository {
             cpf: "98765432111",
             phone: "11 987654322",
             birthDate: new Date(),
+                        role: {
+                persona: "student",
+                status: "active",
+                idPermissionToken: ""
+            },
             address: {
                 cep: "12345",
                 city: "Cidade3",
                 state: "Estado3",
-                road: "Rua3",
+                street: "Rua3",
                 number: "789",
-            }
+            },
+            createAt: new Date(),
+            updateAt: new Date()
         },
 
         {
@@ -61,17 +82,44 @@ export class InMemoryStudentRepository implements IStudentRepository {
             cpf: "98765432111",
             phone: "11 987654322",
             birthDate: new Date(),
+                       role: {
+                persona: "student",
+                status: "active",
+                idPermissionToken: ""
+            },
             address: {
                 cep: "12345",
                 city: "Cidade3",
                 state: "Estado3",
-                road: "Rua3",
+                street: "Rua3",
                 number: "789",
-            }
+            },
+            createAt: new Date(),
+            updateAt: new Date()
+        }, 
+
+        {
+            id: "100052000-6118-123c-8e49-138e71643fa",
+            name: "teste-student",
+            email: "matheuspassos.work@gmail.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                street: "Rua3",
+                number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "student",
+                status: "active"
+            },
+            createAt: new Date(),
+            updateAt: new Date()
         }
-
-        
-
 
     ]
 

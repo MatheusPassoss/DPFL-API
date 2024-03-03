@@ -28,7 +28,10 @@ export class SendMentoringInvite {
         const student = await this.studentRepository.findById(idStudent)
         const mentor = await this.mentorRepository.findById(idMentor)
    
-        if (mentorPeddingInvites != null || mentorMentorshipInProgress != null) {
+        if (mentorPeddingInvites?.length != 0 || mentorMentorshipInProgress != null) {
+            
+            console.log(mentorPeddingInvites)
+            console.log(mentorMentorshipInProgress)
             throw new MentorNotAllowedToInvite()
         }
 
@@ -49,8 +52,8 @@ export class SendMentoringInvite {
         if (invite) {
             this.repository.save(invite)
             const mailService = new SendEmailNotificationService()
-            const invitationSentEvent = new InvitationSentEvent(mailService, invite)
-            
+            const invitationSentEvent = await mailService.inviteSended(student)
+            console.log(invitationSentEvent)
             //this.publisher.publish(invitationSentEvent)
         }
     }
