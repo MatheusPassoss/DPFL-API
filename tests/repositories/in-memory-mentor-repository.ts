@@ -120,7 +120,77 @@ export class InMemoryMentorRepository implements IMentorRepository {
             },
             createAt: new Date(),
             updateAt: new Date()
+        },
+
+        {
+            id: "21052LAY00-6118-123c-8e49-138aaa223fa",
+            name: "Lais Carvalho",
+            email: "lais25carvalho25@gmail.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                street: "Rua3",
+                number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "mentor",
+                status: "active"
+            },
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+
+        {
+            id: "81052l30-6118-123c-8e49-138e71643f9",
+            name: "Anthony Thomas",
+            email: "anthonythomascontato@gmail.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                street: "Rua3",
+                number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "mentor",
+                status: "active"
+            },
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+
+        {
+            id: "10203040-6118-123c-8e49-138e71643f9",
+            name: "Eduardo Moura",
+            email: "edu@dpfl.org.br",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                street: "Rua3",
+                number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "mentor",
+                status: "active"
+            },
+            createAt: new Date(),
+            updateAt: new Date()
         }
+
 
     ]
 
@@ -130,8 +200,6 @@ export class InMemoryMentorRepository implements IMentorRepository {
         if (mentor) {
             return mentor
         }
-
-        console.log(mentor)
 
         return null
     }

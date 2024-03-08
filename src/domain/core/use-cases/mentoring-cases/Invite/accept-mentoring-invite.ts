@@ -11,7 +11,7 @@ interface AcceptMentoringInviteParams {
     idStudent: string
     idMentor: string
 }
-
+ 
 export class AcceptMentoringInvite implements IUseCase<AcceptMentoringInviteParams, MentoringInvite> {
 
     private readonly MentoringInviteRepository: IMentoringInviteRepository

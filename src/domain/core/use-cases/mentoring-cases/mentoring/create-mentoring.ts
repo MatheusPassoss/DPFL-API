@@ -58,7 +58,7 @@ export class CreateMentoring implements IUseCase<CreateMentoringParams, Mentorin
             id: mentor.id
         }
 
-        const newMentoring = Mentoring.create(studentParams, mentorParams, id, new Date());
+        const newMentoring = Mentoring.create(studentParams, mentorParams);
 
         const saved = await this.repository.save(newMentoring);
 

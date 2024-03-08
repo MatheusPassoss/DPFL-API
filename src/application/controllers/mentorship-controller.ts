@@ -10,6 +10,8 @@ import { IMentorRepository } from "../../domain/core/repositories/User/IMentor-r
 import { IMentoringRepository } from "../../domain/core/repositories/Mentoring/IMentoring-repository";
 import { CancelMentoringInvite } from "../../domain/core/use-cases/mentoring-cases/Invite/cancel-mentoring-invite";
 import { CreateMentoringInvite } from "../../domain/core/use-cases/mentoring-cases/Invite/create-metoring-invite";
+import { SendMentoringInvite } from "../use-cases/send-mentoring-invite";
+import { AcceptInviteAndCreateMentorship } from "../use-cases/accept-invite-and-create-mentorship";
 
 export class MentorshipController  {
     
@@ -25,7 +27,7 @@ export class MentorshipController  {
         this.mentorRepository = mentorRepo
     } 
     
-    async createInvite(http: IHttpContext ) {
+    async sendInvite(http: IHttpContext ) {
         
         const res = http.getRequest()
 
@@ -35,8 +37,8 @@ export class MentorshipController  {
             createAt: new Date()
         }
 
-        const created = await new CreateMentoringInvite(this.inviteRepository, this.studentRepository, this.mentorRepository, this.mentoringRepository).execute(params)
-
+        const created = await new SendMentoringInvite(this.inviteRepository, this.studentRepository, this.mentorRepository, this.mentoringRepository).execute(params)
+        
         return created
     }
     
@@ -45,12 +47,11 @@ export class MentorshipController  {
         const res = http.getRequest()
 
         const AcceptInviteParams = {
-            idMentoringInvite: res.body.idMentoringInvite,
-            idStudent: res.body.idStudent,
-            idMentor: res.body.idMentor,
+            idMentor: res.body.idStudent,
+            idStudent: res.body.idMentor
         }
 
-        const accepted = new AcceptMentoringInvite(this.inviteRepository).execute(AcceptInviteParams)
+        const accepted = new AcceptInviteAndCreateMentorship(this.inviteRepository, this.studentRepository, this.mentorRepository, this.mentoringRepository).execute(AcceptInviteParams.idMentor, AcceptInviteParams.idStudent)
 
         if (!accepted) {
             return null

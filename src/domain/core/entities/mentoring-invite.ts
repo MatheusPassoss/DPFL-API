@@ -1,6 +1,6 @@
 import { InvalidInviteStatusError } from "../exceptions/invalid-invite-status-error"
 import { IEntity } from "../shared-global/IEntity"
-
+import { crypto } from "../../../server"
 
 interface MentoringInviteParams {
     id: string,

@@ -279,9 +279,7 @@ export class InMemoryMentoringInviteRepository implements IMentoringInviteReposi
         const MentoringInvite = await this.MentoringInvites.find(MentoringInvites => MentoringInvites.id == filter.id && MentoringInvites.idStudent == filter.idStudent && MentoringInvites.idMentor == filter.idMentor && MentoringInvites.status == filter.status)
 
 
-        console.log(filter.id)
-        console.log(filter.idStudent)
-        console.log(filter.idMentor)
+     
         if (!MentoringInvite) {
             return null
         }

@@ -16,7 +16,7 @@ const MentoringInviteRoutes = (server: FastifyInstance) => {
 
   const controller = new MentorshipController(mentoringRepository, inviteRepository, studentRepository, mentorRepository)
     
-   
+    // aqui é pra ler
     server.get("/invite/:StudentId", async (request: FastifyRequest, reply: FastifyReply) => {
         const fastifyAdapter = new FastifyAdapter(request, reply)
         
@@ -25,10 +25,20 @@ const MentoringInviteRoutes = (server: FastifyInstance) => {
         return invites
     })
 
+    // enviar / crair o invite
     server.post("/invite/create", async (request: FastifyRequest, reply: FastifyReply) => {
+        const fastifyAdapter = new FastifyAdapter(request, reply)
+
+        const mentoring = await controller.sendInvite(fastifyAdapter)
+
+        if (!mentoring) {
+            return reply.code(500)
+        }
         
+        return mentoring
     })
 
+    // aceitar
     server.put("/invite/accept/creatementoring", async (request: FastifyRequest, reply: FastifyReply) => {
         const fastifyAdapter = new FastifyAdapter(request, reply)
 
@@ -42,7 +52,34 @@ const MentoringInviteRoutes = (server: FastifyInstance) => {
     })
 
 
-    server.delete("/", async (request: FastifyRequest, reply: FastifyReply) => {
+    // Recusar convite aaaaaaaaaaaaaaaa
+    server.put("/invite/refuse", async (request: FastifyRequest, reply: FastifyReply) => {
+        const fastifyAdapter = new FastifyAdapter(request, reply)
+
+        const mentoring = await controller.refuseInvite(fastifyAdapter)
+
+        if (!mentoring) {
+            return reply.code(500)
+        }
+        
+        return mentoring
+    })
+
+    // aqui é pra cancel o invite
+    server.put("/invite/cancel", async (request: FastifyRequest, reply: FastifyReply) => {
+        const fastifyAdapter = new FastifyAdapter(request, reply)
+
+        const mentoring = await controller.cancelInvite(fastifyAdapter)
+
+        if (!mentoring) {
+            return reply.code(500)
+        }
+        
+        return mentoring
+    })
+
+
+    server.delete("/aaaa", async (request: FastifyRequest, reply: FastifyReply) => {
         
     })
     }

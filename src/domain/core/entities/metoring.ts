@@ -1,5 +1,5 @@
 import { IEntity } from "../shared-global/IEntity"
-
+import { crypto } from "../../../server"
 interface StudentParams {
     name: string
     email: string

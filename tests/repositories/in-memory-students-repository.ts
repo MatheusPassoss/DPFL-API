@@ -100,8 +100,78 @@ export class InMemoryStudentRepository implements IStudentRepository {
 
         {
             id: "100052000-6118-123c-8e49-138e71643fa",
-            name: "teste-student",
+            name: "Matheus Passos",
             email: "matheuspassos.work@gmail.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                street: "Rua3",
+                number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "student",
+                status: "active"
+            },
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+
+        
+        {
+            id: "100052000-6118-123c-8e49-138e71643fa",
+            name: "vinicius costa teste",
+            email: "viniciuscosta_e10@hotmail.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                street: "Rua3",
+                number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "student",
+                status: "active"
+            },
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+
+        {
+            id: "1340520la-6118-123c-8e49-138e71643fa",
+            name: "vini",
+            email: "viniciuscosta_e10@hotmail.com",
+            cpf: "98765432111",
+            phone: "11 987654322",
+            birthDate: new Date(),
+            address: {
+                cep: "12345",
+                city: "Cidade3",
+                state: "Estado3",
+                street: "Rua3",
+                number: "789",
+            },
+            role: {
+                idPermissionToken: "",
+                persona: "student",
+                status: "active"
+            },
+            createAt: new Date(),
+            updateAt: new Date()
+        },
+
+        {
+            id: "999992228778-6118-123c-8e49-138e71643fa",
+            name: "Passos Matheus",
+            email: "passosmatheus.work@gmail.com",
             cpf: "98765432111",
             phone: "11 987654322",
             birthDate: new Date(),
@@ -142,7 +212,7 @@ export class InMemoryStudentRepository implements IStudentRepository {
             return null
         }
 
-        console.log(student)
+        
 
         return student
     }

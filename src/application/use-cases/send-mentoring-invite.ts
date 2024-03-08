@@ -6,7 +6,6 @@ import { IMentoringInviteRepository } from "../../domain/core/repositories/Mento
 import { IMentorRepository } from "../../domain/core/repositories/User/IMentor-repository";
 import { IStudentRepository } from "../../domain/core/repositories/User/IStudent-repository";
 import { MentorshipService } from "../../domain/core/domain-services/mentorship-service";
-import { InvitationSentEvent } from "../events/invitation-sent-event";
 import { SendEmailNotificationService } from "../services/email-service/send-email-notification";
 
 interface SendInviteParams {
@@ -30,8 +29,7 @@ export class SendMentoringInvite {
    
         if (mentorPeddingInvites?.length != 0 || mentorMentorshipInProgress != null) {
             
-            console.log(mentorPeddingInvites)
-            console.log(mentorMentorshipInProgress)
+ 
             throw new MentorNotAllowedToInvite()
         }
 
@@ -52,10 +50,11 @@ export class SendMentoringInvite {
         if (invite) {
             this.repository.save(invite)
             const mailService = new SendEmailNotificationService()
-            const invitationSentEvent = await mailService.inviteSended(student)
-            console.log(invitationSentEvent)
-            //this.publisher.publish(invitationSentEvent)
+            const invitationSentEvent = await mailService.inviteSended(student, mentor)
+   
         }
+
+        return invite
     }
     
 }
